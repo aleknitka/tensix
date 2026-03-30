@@ -210,3 +210,12 @@ Plans:
 
 Plans:
 - [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.10: Onboarding Agent for Problem Refinement (BACKLOG)
+
+**Goal:** Add an onboarding agent that interacts with the user to refine and clarify the initial question or problem statement, ensuring higher quality inputs for the round-table evaluation.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (promote with /gsd:review-backlog when ready)
