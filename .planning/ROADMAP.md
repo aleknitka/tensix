@@ -112,3 +112,14 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 | 5. Context & Reporting | 3/3 | Completed | 2026-03-30 |
 | 6. Tool Use & External Knowledge | 0/3 | Not Started | - |
 | 7. Advanced Orchestration & Branching | 0/3 | Not Started | - |
+
+## Backlog
+
+### Phase 999.1: Role Refinement & Expansion (BACKLOG)
+
+**Goal:** Design more specialized roles and tailor existing ones to be less chatty and improve role-play quality.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (promote with /gsd:review-backlog when ready)
