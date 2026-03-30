@@ -186,3 +186,12 @@ Plans:
 
 Plans:
 - [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.9: .env Config Ingestion for Containers (BACKLOG)
+
+**Goal:** Implement support for ingesting LLM endpoint configurations and API keys via .env files or environment variables, facilitating easier setup in Docker/Docker Compose environments.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (promote with /gsd:review-backlog when ready)
