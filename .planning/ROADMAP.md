@@ -106,8 +106,16 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 ### Phase 8: Markdown Rendering in Chat
 **Goal**: Implement markdown support for messages in the chat UI (e.g., using react-markdown) to properly display formatted text, lists, and tables.
 **Depends on**: Phase 3
-**Requirements**: TBD
-**Plans**: 0 plans
+**Requirements**: REND-01, REND-02, REND-03
+**Success Criteria**:
+  1. Messages correctly render Markdown elements (headers, bold, italics).
+  2. Tables are rendered cleanly using GFM syntax.
+  3. Code blocks show syntax highlighting and a "Copy" button.
+**Plans**:
+- [ ] 08-01-PLAN.md — Foundation & Dependencies (Wave 1)
+- [ ] 08-02-PLAN.md — Markdown Component Implementation (Wave 2)
+- [ ] 08-03-PLAN.md — Integration & Verification (Wave 3)
+**UI hint**: yes
 
 ### Phase 9: More Customisation when defining the role
 **Goal**: Allow for more granular control and customization options when creating or editing persona roles.
@@ -126,7 +134,7 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 | 5. Context & Reporting | 3/3 | Completed | 2026-03-30 |
 | 6. Tool Use & External Knowledge | 0/3 | Not Started | - |
 | 7. Advanced Orchestration & Branching | 0/3 | Not Started | - |
-| 8. Markdown Rendering in Chat | 0/0 | Not Started | - |
+| 8. Markdown Rendering in Chat | 0/3 | In Progress | - |
 | 9. More Customisation role | 0/0 | Not Started | - |
 
 ## Backlog
