@@ -11,6 +11,8 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 - [x] **Phase 5: Context & Reporting** - Finalize reporting features and handle long-running session context via summarization.
 - [ ] **Phase 6: Tool Use & External Knowledge** - Implement function calling for personas and a RAG-lite knowledge base.
 - [ ] **Phase 7: Advanced Orchestration & Branching** - Add dynamic turn suggestion, consensus modes, and session forking.
+- [ ] **Phase 8: Markdown Rendering in Chat** - Proper display of formatted text, lists, and tables in the UI.
+- [ ] **Phase 9: More Customisation when defining the role** - Enhanced persona definition options.
 
 ## Phase Details
 
@@ -101,6 +103,18 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
   2. A "Consensus" round successfully terminates when agreement is reached.
   3. User can fork a session from a past message and continue it independently.
 
+### Phase 8: Markdown Rendering in Chat
+**Goal**: Implement markdown support for messages in the chat UI (e.g., using react-markdown) to properly display formatted text, lists, and tables.
+**Depends on**: Phase 3
+**Requirements**: TBD
+**Plans**: 0 plans
+
+### Phase 9: More Customisation when defining the role
+**Goal**: Allow for more granular control and customization options when creating or editing persona roles.
+**Depends on**: Phase 4
+**Requirements**: TBD
+**Plans**: 0 plans
+
 ## Progress Table
 
 | Phase | Plans Complete | Status | Completed |
@@ -112,6 +126,8 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 | 5. Context & Reporting | 3/3 | Completed | 2026-03-30 |
 | 6. Tool Use & External Knowledge | 0/3 | Not Started | - |
 | 7. Advanced Orchestration & Branching | 0/3 | Not Started | - |
+| 8. Markdown Rendering in Chat | 0/0 | Not Started | - |
+| 9. More Customisation role | 0/0 | Not Started | - |
 
 ## Backlog
 
@@ -136,15 +152,6 @@ Plans:
 ### Phase 999.3: Run as Docker Container (BACKLOG)
 
 **Goal:** Provide Docker support for easier deployment and containerized execution of the backend and frontend.
-**Requirements:** TBD
-**Plans:** 0 plans
-
-Plans:
-- [ ] TBD (promote with /gsd:review-backlog when ready)
-
-### Phase 999.4: Markdown Rendering in Chat (BACKLOG)
-
-**Goal:** Implement markdown support for messages in the chat UI (e.g., using react-markdown) to properly display formatted text, lists, and tables.
 **Requirements:** TBD
 **Plans:** 0 plans
 
@@ -190,15 +197,6 @@ Plans:
 ### Phase 999.9: .env Config Ingestion for Containers (BACKLOG)
 
 **Goal:** Implement support for ingesting LLM endpoint configurations and API keys via .env files or environment variables, facilitating easier setup in Docker/Docker Compose environments.
-**Requirements:** TBD
-**Plans:** 0 plans
-
-Plans:
-- [ ] TBD (promote with /gsd:review-backlog when ready)
-
-### Phase 999.10: more costumisation when defining the role (BACKLOG)
-
-**Goal:** [Captured for future planning]
 **Requirements:** TBD
 **Plans:** 0 plans
 
