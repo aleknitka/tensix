@@ -20,7 +20,10 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
   1. User can launch the application and see a persistent session history sidebar.
   2. System can create, save, and reload a session record from SQLite.
   3. User can see the application version and backend API status.
-**Plans**: TBD
+**Plans**:
+- [ ] 01-01-PLAN.md — Core Scaffolding (Next.js, Tauri v2, Hono)
+- [ ] 01-02-PLAN.md — Persistence Layer (Drizzle, SQLite)
+- [ ] 01-03-PLAN.md — UI Foundation & Sidebar
 **UI hint**: yes
 
 ### Phase 2: Connectivity & Discovery
@@ -71,7 +74,7 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Project Foundation | 0/1 | Not started | - |
+| 1. Project Foundation | 0/3 | In progress | - |
 | 2. Connectivity & Discovery | 0/1 | Not started | - |
 | 3. Core Orchestration | 0/1 | Not started | - |
 | 4. Persona Management & Moderation | 0/1 | Not started | - |
