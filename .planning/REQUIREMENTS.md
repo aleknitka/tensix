@@ -64,23 +64,23 @@ Requirements for initial release, focusing on local-first round-table evaluation
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CONN-01 | Phase 1 | Pending |
-| CONN-02 | Phase 1 | Pending |
-| CONN-03 | Phase 1 | Pending |
-| CONN-04 | Phase 1 | Pending |
-| PERS-01 | Phase 2 | Pending |
-| PERS-02 | Phase 2 | Pending |
-| PERS-03 | Phase 2 | Pending |
-| ORCH-01 | Phase 2 | Pending |
-| ORCH-02 | Phase 3 | Pending |
-| ORCH-03 | Phase 4 | Pending |
+| CONN-01 | Phase 2 | Pending |
+| CONN-02 | Phase 2 | Pending |
+| CONN-03 | Phase 2 | Pending |
+| CONN-04 | Phase 2 | Pending |
+| PERS-01 | Phase 3 | Pending |
+| PERS-02 | Phase 4 | Pending |
+| PERS-03 | Phase 3 | Pending |
+| ORCH-01 | Phase 3 | Pending |
+| ORCH-02 | Phase 4 | Pending |
+| ORCH-03 | Phase 5 | Pending |
 | ORCH-04 | Phase 1 | Pending |
-| UI-01 | Phase 2 | Pending |
-| UI-02 | Phase 3 | Pending |
+| UI-01 | Phase 3 | Pending |
+| UI-02 | Phase 4 | Pending |
 | UI-03 | Phase 1 | Pending |
-| UI-04 | Phase 4 | Pending |
+| UI-04 | Phase 5 | Pending |
 | API-01 | Phase 1 | Pending |
-| API-02 | Phase 4 | Pending |
+| API-02 | Phase 5 | Pending |
 
 **Coverage:**
 - v1 requirements: 17 total
