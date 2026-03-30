@@ -150,3 +150,12 @@ Plans:
 
 Plans:
 - [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.5: Ability to Add Files for Discussion (BACKLOG)
+
+**Goal:** Allow users to upload and attach files/documents to a session to provide extra context for the round-table evaluation.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (promote with /gsd:review-backlog when ready)
