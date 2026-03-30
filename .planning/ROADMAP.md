@@ -159,3 +159,12 @@ Plans:
 
 Plans:
 - [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.6: Add Other Roles (BACKLOG)
+
+**Goal:** Expand the available persona templates beyond the Six Thinking Hats to include other specialized roles for deeper evaluation and diverse perspectives.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (promote with /gsd:review-backlog when ready)
