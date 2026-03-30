@@ -10,17 +10,21 @@ Users can evaluate and refine ideas through a structured, multi-perspective LLM 
 
 ## Requirements
 
-### Validated
+### Active (Milestone 2: Intelligent Orchestration & Tools)
 
-(None yet — ship to validate)
+- [ ] **RND-06**: Implement tool-use (function calling) for personas (e.g., web search, file access).
+- [ ] **RND-07**: Add "Dynamic Hat Selection" — the system can automatically suggest which hat should speak next.
+- [ ] **RND-08**: Support "Multi-Round Consensus" workflows where agents iterate until a conclusion is reached.
+- [ ] **RND-09**: Implement "Expert Knowledge Base" — allow users to upload documents for personas to reference.
+- [ ] **RND-10**: Support for "Branching Discussions" — allow the user to fork a session from any message.
 
-### Active
+### Validated (Milestone 1: Foundation & SEQ)
 
-- [ ] **RND-01**: User can add/remove "Six Hats" and custom personas to a round-table session.
-- [ ] **RND-02**: Support for local LLM backends (Ollama, LM Studio) via configurable endpoints.
-- [ ] **RND-03**: Support for cloud-based LLM providers (OpenRouter/OpenAI API compatible).
-- [ ] **RND-04**: Reusable API for external tools to trigger and consume round-table evaluations.
-- [ ] **RND-05**: Web UI for real-time observation and interaction with the participants.
+- [x] **RND-01**: User can add/remove "Six Hats" and custom personas to a round-table session.
+- [x] **RND-02**: Support for local LLM backends (Ollama, LM Studio) via configurable endpoints.
+- [x] **RND-03**: Support for cloud-based LLM providers (OpenRouter/OpenAI API compatible).
+- [x] **RND-04**: Reusable API for external tools to trigger and consume round-table evaluations.
+- [x] **RND-05**: Web UI for real-time observation and interaction with the participants.
 
 ### Out of Scope
 

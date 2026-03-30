@@ -8,7 +8,9 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 - [x] **Phase 2: Connectivity & Discovery** - Connect the application to local (Ollama/LM Studio) and cloud (OpenRouter) providers.
 - [x] **Phase 3: Core Orchestration (The Round Table)** - Implement the Serial Expert Queue (SEQ) for sequential multi-persona reasoning.
 - [x] **Phase 4: Persona Management & Moderation** - Add interactive human-in-the-loop controls and custom persona creation.
-- [ ] **Phase 5: Context & Reporting** - Finalize reporting features and handle long-running session context via summarization.
+- [x] **Phase 5: Context & Reporting** - Finalize reporting features and handle long-running session context via summarization.
+- [ ] **Phase 6: Tool Use & External Knowledge** - Implement function calling for personas and a RAG-lite knowledge base.
+- [ ] **Phase 7: Advanced Orchestration & Branching** - Add dynamic turn suggestion, consensus modes, and session forking.
 
 ## Phase Details
 
@@ -76,10 +78,28 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
   2. User can export a structured "Final Audit Report" as Markdown or PDF.
   3. External tools can retrieve session history via the REST API for further processing.
 **Plans**:
-- [ ] 05-01-PLAN.md — Context Management & Summarization
-- [ ] 05-02-PLAN.md — Structured Reporting & Synthesis
-- [ ] 05-03-PLAN.md — History Export & Final Polish
+- [x] 05-01-PLAN.md — Context Management & Summarization
+- [x] 05-02-PLAN.md — Structured Reporting & Synthesis
+- [x] 05-03-PLAN.md — History Export & Final Polish
 **UI hint**: yes
+
+### Phase 6: Tool Use & External Knowledge
+**Goal**: Enable personas to interact with the world and reference user documents.
+**Depends on**: Phase 5
+**Requirements**: TOOL-01, TOOL-02, TOOL-03, KNOW-01, KNOW-02, UI-05
+**Success Criteria**:
+  1. User can define a tool (e.g., Google Search) and assign it to the "White Hat".
+  2. Persona successfully executes the tool and incorporates results into its turn.
+  3. User can upload a text file that influences the hat responses.
+
+### Phase 7: Advanced Orchestration & Branching
+**Goal**: Transition from static turn-taking to intelligent, adaptive round-tables.
+**Depends on**: Phase 6
+**Requirements**: ORCH-05, ORCH-06, ORCH-07, UI-06
+**Success Criteria**:
+  1. The "Blue Hat" can suggest the next speaker based on current gaps in the discussion.
+  2. A "Consensus" round successfully terminates when agreement is reached.
+  3. User can fork a session from a past message and continue it independently.
 
 ## Progress Table
 
@@ -89,4 +109,6 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 | 2. Connectivity & Discovery | 2/2 | Completed | 2024-05-24 |
 | 3. Core Orchestration | 3/3 | Completed | 2024-05-24 |
 | 4. Persona Management & Moderation | 3/3 | Completed | 2024-05-25 |
-| 5. Context & Reporting | 0/3 | In Progress | - |
+| 5. Context & Reporting | 3/3 | Completed | 2026-03-30 |
+| 6. Tool Use & External Knowledge | 0/3 | Not Started | - |
+| 7. Advanced Orchestration & Branching | 0/3 | Not Started | - |
