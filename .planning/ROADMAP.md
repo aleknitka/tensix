@@ -4,9 +4,9 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 
 ## Phases
 
-- [ ] **Phase 1: Project Foundation** - Establish the Tauri/Next.js/Bun scaffold and SQLite persistence layer.
-- [ ] **Phase 2: Connectivity & Discovery** - Connect the application to local (Ollama/LM Studio) and cloud (OpenRouter) providers.
-- [ ] **Phase 3: Core Orchestration (The Round Table)** - Implement the Serial Expert Queue (SEQ) for sequential multi-persona reasoning.
+- [x] **Phase 1: Project Foundation** - Establish the Tauri/Next.js/Bun scaffold and SQLite persistence layer.
+- [x] **Phase 2: Connectivity & Discovery** - Connect the application to local (Ollama/LM Studio) and cloud (OpenRouter) providers.
+- [x] **Phase 3: Core Orchestration (The Round Table)** - Implement the Serial Expert Queue (SEQ) for sequential multi-persona reasoning.
 - [ ] **Phase 4: Persona Management & Moderation** - Add interactive human-in-the-loop controls and custom persona creation.
 - [ ] **Phase 5: Context & Reporting** - Finalize reporting features and handle long-running session context via summarization.
 
@@ -21,9 +21,9 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
   2. System can create, save, and reload a session record from SQLite.
   3. User can see the application version and backend API status.
 **Plans**:
-- [ ] 01-01-PLAN.md — Core Scaffolding (Next.js, Tauri v2, Hono)
-- [ ] 01-02-PLAN.md — Persistence Layer (Drizzle, SQLite)
-- [ ] 01-03-PLAN.md — UI Foundation & Sidebar
+- [x] 01-01-PLAN.md — Core Scaffolding (Next.js, Tauri v2, Hono)
+- [x] 01-02-PLAN.md — Persistence Layer (Drizzle, SQLite)
+- [x] 01-03-PLAN.md — UI Foundation & Sidebar
 **UI hint**: yes
 
 ### Phase 2: Connectivity & Discovery
@@ -34,7 +34,9 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
   1. User can verify a connection to a local Ollama or LM Studio instance from the settings UI.
   2. User can select from a dynamically updated list of available models for each provider.
   3. System provides immediate feedback if a connection fails or a model is incompatible.
-**Plans**: TBD
+**Plans**:
+- [x] 02-01-PLAN.md — Core Providers & Persistence
+- [x] 02-02-PLAN.md — Settings UI & Connection Feedback
 **UI hint**: yes
 
 ### Phase 3: Core Orchestration (The Round Table)
@@ -45,7 +47,10 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
   1. User can start a round-table session using "Six Thinking Hats" templates.
   2. The UI streams each agent's response in real-time as they take turns.
   3. Models are loaded and unloaded sequentially to ensure VRAM limits are respected.
-**Plans**: TBD
+**Plans**:
+- [x] 03-01-PLAN.md — Orchestration Core & Provider Upgrades
+- [x] 03-02-PLAN.md — Persona Templates & Streaming API
+- [x] 03-03-PLAN.md — Round Table UI Integration
 **UI hint**: yes
 
 ### Phase 4: Persona Management & Moderation
@@ -56,7 +61,10 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
   1. User can create and save custom personas with specific system prompts and assigned models.
   2. User can manually pause the debate and intervene (edit messages or force specific turns).
   3. User can moderate the flow of conversation via the "Blue Hat" dashboard.
-**Plans**: TBD
+**Plans**:
+- [ ] 04-01-PLAN.md — Persona Management CRUD
+- [ ] 04-02-PLAN.md — Message-Level Moderation
+- [ ] 04-03-PLAN.md — Orchestration & HITL Control
 **UI hint**: yes
 
 ### Phase 5: Context & Reporting
@@ -74,8 +82,8 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Project Foundation | 0/3 | In progress | - |
-| 2. Connectivity & Discovery | 0/1 | Not started | - |
-| 3. Core Orchestration | 0/1 | Not started | - |
-| 4. Persona Management & Moderation | 0/1 | Not started | - |
+| 1. Project Foundation | 3/3 | Completed | 2024-05-24 |
+| 2. Connectivity & Discovery | 2/2 | Completed | 2024-05-24 |
+| 3. Core Orchestration | 3/3 | Completed | 2024-05-24 |
+| 4. Persona Management & Moderation | 0/3 | In Progress | - |
 | 5. Context & Reporting | 0/1 | Not started | - |
