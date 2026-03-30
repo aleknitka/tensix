@@ -1,0 +1,45 @@
+{
+  "name": "tensix",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "dev:backend": "tsx watch src/server/index.ts",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "^3.0.48",
+    "@hono/node-server": "^1.19.12",
+    "@lmstudio/sdk": "^1.5.0",
+    "@tauri-apps/api": "^2.10.1",
+    "@tauri-apps/plugin-shell": "^2.3.5",
+    "ai": "^6.0.141",
+    "better-sqlite3": "^12.8.0",
+    "drizzle-orm": "^0.45.2",
+    "hono": "^4.12.9",
+    "lucide-react": "^1.7.0",
+    "next": "16.2.1",
+    "ollama": "^0.6.3",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@tauri-apps/cli": "^2.10.1",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^20.19.37",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@types/uuid": "^10.0.0",
+    "drizzle-kit": "^0.31.10",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.1",
+    "tailwindcss": "^4",
+    "tsx": "^4.21.0",
+    "typescript": "^5"
+  }
+}

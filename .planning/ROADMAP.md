@@ -7,7 +7,7 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 - [x] **Phase 1: Project Foundation** - Establish the Tauri/Next.js/Bun scaffold and SQLite persistence layer.
 - [x] **Phase 2: Connectivity & Discovery** - Connect the application to local (Ollama/LM Studio) and cloud (OpenRouter) providers.
 - [x] **Phase 3: Core Orchestration (The Round Table)** - Implement the Serial Expert Queue (SEQ) for sequential multi-persona reasoning.
-- [ ] **Phase 4: Persona Management & Moderation** - Add interactive human-in-the-loop controls and custom persona creation.
+- [x] **Phase 4: Persona Management & Moderation** - Add interactive human-in-the-loop controls and custom persona creation.
 - [ ] **Phase 5: Context & Reporting** - Finalize reporting features and handle long-running session context via summarization.
 
 ## Phase Details
@@ -62,9 +62,9 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
   2. User can manually pause the debate and intervene (edit messages or force specific turns).
   3. User can moderate the flow of conversation via the "Blue Hat" dashboard.
 **Plans**:
-- [ ] 04-01-PLAN.md — Persona Management CRUD
-- [ ] 04-02-PLAN.md — Message-Level Moderation
-- [ ] 04-03-PLAN.md — Orchestration & HITL Control
+- [x] 04-01-PLAN.md — Persona Management CRUD
+- [x] 04-02-PLAN.md — Message-Level Moderation
+- [x] 04-03-PLAN.md — Orchestration & HITL Control
 **UI hint**: yes
 
 ### Phase 5: Context & Reporting
@@ -75,7 +75,10 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
   1. System automatically manages LLM context windows through periodic summarization.
   2. User can export a structured "Final Audit Report" as Markdown or PDF.
   3. External tools can retrieve session history via the REST API for further processing.
-**Plans**: TBD
+**Plans**:
+- [ ] 05-01-PLAN.md — Context Management & Summarization
+- [ ] 05-02-PLAN.md — Structured Reporting & Synthesis
+- [ ] 05-03-PLAN.md — History Export & Final Polish
 **UI hint**: yes
 
 ## Progress Table
@@ -85,5 +88,5 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 | 1. Project Foundation | 3/3 | Completed | 2024-05-24 |
 | 2. Connectivity & Discovery | 2/2 | Completed | 2024-05-24 |
 | 3. Core Orchestration | 3/3 | Completed | 2024-05-24 |
-| 4. Persona Management & Moderation | 0/3 | In Progress | - |
-| 5. Context & Reporting | 0/1 | Not started | - |
+| 4. Persona Management & Moderation | 3/3 | Completed | 2024-05-25 |
+| 5. Context & Reporting | 0/3 | In Progress | - |
