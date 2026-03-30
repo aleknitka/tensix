@@ -168,3 +168,12 @@ Plans:
 
 Plans:
 - [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.7: Add Hugging Face Inference Endpoint (BACKLOG)
+
+**Goal:** Integrate Hugging Face Inference Endpoints as a provider option for running evaluations using a wider variety of open-source models.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (promote with /gsd:review-backlog when ready)
