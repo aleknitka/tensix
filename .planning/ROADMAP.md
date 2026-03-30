@@ -132,3 +132,12 @@ Plans:
 
 Plans:
 - [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.3: Run as Docker Container (BACKLOG)
+
+**Goal:** Provide Docker support for easier deployment and containerized execution of the backend and frontend.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (promote with /gsd:review-backlog when ready)
