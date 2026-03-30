@@ -177,3 +177,12 @@ Plans:
 
 Plans:
 - [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.8: Enable Auto Summarisation with a Model (BACKLOG)
+
+**Goal:** Allow users to specify a specific model to be used exclusively for automated session summarization to optimize performance and context usage.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (promote with /gsd:review-backlog when ready)
