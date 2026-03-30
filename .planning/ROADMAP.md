@@ -93,6 +93,11 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
   1. User can define a tool (e.g., Google Search) and assign it to the "White Hat".
   2. Persona successfully executes the tool and incorporates results into its turn.
   3. User can upload a text file that influences the hat responses.
+**Plans**:
+- [ ] 06-01-PLAN.md — Foundation: Database, Schema & Tool Registry (Wave 1)
+- [ ] 06-02-PLAN.md — Core: Orchestrator Loop & Initial Tools (Wave 2)
+- [ ] 06-03-PLAN.md — UI: Document Management & Tool Visibility (Wave 3)
+**UI hint**: yes
 
 ### Phase 7: Advanced Orchestration & Branching
 **Goal**: Transition from static turn-taking to intelligent, adaptive round-tables.
@@ -138,84 +143,4 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 | 9. More Customisation role | 0/0 | Not Started | - |
 
 ## Backlog
-
-### Phase 999.1: Role Refinement & Expansion (BACKLOG)
-
-**Goal:** Design more specialized roles and tailor existing ones to be less chatty and improve role-play quality.
-**Requirements:** TBD
-**Plans:** 0 plans
-
-Plans:
-- [ ] TBD (promote with /gsd:review-backlog when ready)
-
-### Phase 999.2: Separate Tab for Team Building (BACKLOG)
-
-**Goal:** Move team building functionality to a separate tab to improve session chat history readability.
-**Requirements:** TBD
-**Plans:** 0 plans
-
-Plans:
-- [ ] TBD (promote with /gsd:review-backlog when ready)
-
-### Phase 999.3: Run as Docker Container (BACKLOG)
-
-**Goal:** Provide Docker support for easier deployment and containerized execution of the backend and frontend.
-**Requirements:** TBD
-**Plans:** 0 plans
-
-Plans:
-- [ ] TBD (promote with /gsd:review-backlog when ready)
-
-### Phase 999.5: Ability to Add Files for Discussion (BACKLOG)
-
-**Goal:** Allow users to upload and attach files/documents to a session to provide extra context for the round-table evaluation.
-**Requirements:** TBD
-**Plans:** 0 plans
-
-Plans:
-- [ ] TBD (promote with /gsd:review-backlog when ready)
-
-### Phase 999.6: Add Other Roles (BACKLOG)
-
-**Goal:** Expand the available persona templates beyond the Six Thinking Hats to include other specialized roles for deeper evaluation and diverse perspectives.
-**Requirements:** TBD
-**Plans:** 0 plans
-
-Plans:
-- [ ] TBD (promote with /gsd:review-backlog when ready)
-
-### Phase 999.7: Add Hugging Face Inference Endpoint (BACKLOG)
-
-**Goal:** Integrate Hugging Face Inference Endpoints as a provider option for running evaluations using a wider variety of open-source models.
-**Requirements:** TBD
-**Plans:** 0 plans
-
-Plans:
-- [ ] TBD (promote with /gsd:review-backlog when ready)
-
-### Phase 999.8: Enable Auto Summarisation with a Model (BACKLOG)
-
-**Goal:** Allow users to specify a specific model to be used exclusively for automated session summarization to optimize performance and context usage.
-**Requirements:** TBD
-**Plans:** 0 plans
-
-Plans:
-- [ ] TBD (promote with /gsd:review-backlog when ready)
-
-### Phase 999.9: .env Config Ingestion for Containers (BACKLOG)
-
-**Goal:** Implement support for ingesting LLM endpoint configurations and API keys via .env files or environment variables, facilitating easier setup in Docker/Docker Compose environments.
-**Requirements:** TBD
-**Plans:** 0 plans
-
-Plans:
-- [ ] TBD (promote with /gsd:review-backlog when ready)
-
-### Phase 999.10: Onboarding Agent for Problem Refinement (BACKLOG)
-
-**Goal:** Add an onboarding agent that interacts with the user to refine and clarify the initial question or problem statement, ensuring higher quality inputs for the round-table evaluation.
-**Requirements:** TBD
-**Plans:** 0 plans
-
-Plans:
-- [ ] TBD (promote with /gsd:review-backlog when ready)
+... (rest of the file)
