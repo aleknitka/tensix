@@ -123,3 +123,12 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 
 Plans:
 - [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.2: Separate Tab for Team Building (BACKLOG)
+
+**Goal:** Move team building functionality to a separate tab to improve session chat history readability.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (promote with /gsd:review-backlog when ready)
