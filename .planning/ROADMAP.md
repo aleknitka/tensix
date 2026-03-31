@@ -13,6 +13,9 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 - [ ] **Phase 7: Advanced Orchestration & Branching** - Add dynamic turn suggestion, consensus modes, and session forking.
 - [ ] **Phase 8: Markdown Rendering in Chat** - Proper display of formatted text, lists, and tables in the UI.
 - [ ] **Phase 9: More Customisation when defining the role** - Enhanced persona definition options.
+- [ ] **Phase 10: Role Refinement & Expansion** - Design specialized roles and tailor existing ones for better roleplay.
+- [ ] **Phase 11: Add Other Roles** - Expand template library beyond Six Thinking Hats.
+- [ ] **Phase 12: Onboarding Agent for Problem Refinement** - Guided initial problem definition for users.
 
 ## Phase Details
 
@@ -94,9 +97,9 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
   2. Persona successfully executes the tool and incorporates results into its turn.
   3. User can upload a text file that influences the hat responses.
 **Plans**:
-- [ ] 06-01-PLAN.md — Foundation: Database, Schema & Tool Registry (Wave 1)
-- [ ] 06-02-PLAN.md — Core: Orchestrator Loop & Initial Tools (Wave 2)
-- [ ] 06-03-PLAN.md — UI: Document Management & Tool Visibility (Wave 3)
+- [x] 06-01-PLAN.md — Foundation: Database, Schema & Tool Registry (Wave 1)
+- [x] 06-02-PLAN.md — Core: Orchestrator Loop & Initial Tools (Wave 2)
+- [x] 06-03-PLAN.md — UI: Document Management & Tool Visibility (Wave 3)
 **UI hint**: yes
 
 ### Phase 7: Advanced Orchestration & Branching
@@ -117,14 +120,32 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
   2. Tables are rendered cleanly using GFM syntax.
   3. Code blocks show syntax highlighting and a "Copy" button.
 **Plans**:
-- [ ] 08-01-PLAN.md — Foundation & Dependencies (Wave 1)
-- [ ] 08-02-PLAN.md — Markdown Component Implementation (Wave 2)
-- [ ] 08-03-PLAN.md — Integration & Verification (Wave 3)
+- [x] 08-01-PLAN.md — Foundation & Dependencies (Wave 1)
+- [x] 08-02-PLAN.md — Markdown Component Implementation (Wave 2)
+- [x] 08-03-PLAN.md — Integration & Verification (Wave 3)
 **UI hint**: yes
 
 ### Phase 9: More Customisation when defining the role
 **Goal**: Allow for more granular control and customization options when creating or editing persona roles.
 **Depends on**: Phase 4
+**Requirements**: TBD
+**Plans**: 0 plans
+
+### Phase 10: Role Refinement & Expansion
+**Goal**: Design specialized roles and tailor existing ones to be less chatty and improve role-play quality.
+**Depends on**: Phase 4
+**Requirements**: TBD
+**Plans**: 0 plans
+
+### Phase 11: Add Other Roles
+**Goal**: Expand the template library beyond the initial Six Thinking Hats to include other cognitive frameworks and expert personas.
+**Depends on**: Phase 10
+**Requirements**: TBD
+**Plans**: 0 plans
+
+### Phase 12: Onboarding Agent for Problem Refinement
+**Goal**: Implement an agent that interacts with the user to clarify and refine their initial prompt before the round-table begins.
+**Depends on**: Phase 3
 **Requirements**: TBD
 **Plans**: 0 plans
 
@@ -137,10 +158,30 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 | 3. Core Orchestration | 3/3 | Completed | 2024-05-24 |
 | 4. Persona Management & Moderation | 3/3 | Completed | 2024-05-25 |
 | 5. Context & Reporting | 3/3 | Completed | 2026-03-30 |
-| 6. Tool Use & External Knowledge | 0/3 | Not Started | - |
+| 6. Tool Use & External Knowledge | 3/3 | Completed | 2026-03-30 |
 | 7. Advanced Orchestration & Branching | 0/3 | Not Started | - |
-| 8. Markdown Rendering in Chat | 0/3 | In Progress | - |
+| 8. Markdown Rendering in Chat | 3/3 | Completed | 2026-03-30 |
 | 9. More Customisation role | 0/0 | Not Started | - |
+| 10. Role Refinement & Expansion | 0/0 | Not Started | - |
+| 11. Add Other Roles | 0/0 | Not Started | - |
+| 12. Onboarding Agent | 0/0 | Not Started | - |
 
 ## Backlog
-... (rest of the file)
+
+### Phase 999.2: Separate Tab for Team Building (BACKLOG)
+**Goal:** Move team building functionality to a separate tab to improve session chat history readability.
+
+### Phase 999.3: Run as Docker Container (BACKLOG)
+**Goal:** Provide Docker support for easier deployment and containerized execution of the backend and frontend.
+
+### Phase 999.5: Ability to Add Files for Discussion (BACKLOG)
+**Goal:** Allow users to upload and attach files/documents to a session to provide extra context.
+
+### Phase 999.7: Add Hugging Face Inference Endpoint (BACKLOG)
+**Goal:** Integrate Hugging Face Inference Endpoints as a provider option.
+
+### Phase 999.8: Enable Auto Summarisation with a Model (BACKLOG)
+**Goal:** Allow users to specify a specific model to be used exclusively for automated session summarization.
+
+### Phase 999.9: .env Config Ingestion for Containers (BACKLOG)
+**Goal:** Implement support for ingesting LLM endpoint configurations and API keys via .env files.
