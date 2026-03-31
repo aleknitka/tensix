@@ -126,16 +126,34 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 **UI hint**: yes
 
 ### Phase 9: More Customisation when defining the role
-**Goal**: Allow for more granular control and customization options when creating or editing persona roles.
+**Goal**: Enhance the persona system with granular controls, visual identity, and live testing capabilities.
 **Depends on**: Phase 4
-**Requirements**: TBD
-**Plans**: 0 plans
+**Requirements**: PERS-04, PERS-05, API-03, UI-07, UI-08, UI-09, UI-10
+**Success Criteria**:
+  1. Users can configure temperature and other model-specific parameters.
+  2. Personas can be assigned custom icons and color accents.
+  3. The editor includes a working sandbox for immediate persona feedback.
+  4. Reasoning templates can be easily inserted into system prompts.
+**Plans**:
+- [ ] 09-01-PLAN.md — Database & Backend Updates (Wave 1)
+- [ ] 09-02-PLAN.md — UI Enhancements Part 1: Parameters & Visuals (Wave 2)
+- [ ] 09-03-PLAN.md — UI Enhancements Part 2: Sandbox & Templates (Wave 3)
+**UI hint**: yes
 
 ### Phase 10: Role Refinement & Expansion
 **Goal**: Design specialized roles and tailor existing ones to be less chatty and improve role-play quality.
 **Depends on**: Phase 4
-**Requirements**: TBD
-**Plans**: 0 plans
+**Requirements**: ROLE-01, ROLE-02, ROLE-03, CHAT-01
+**Success Criteria**:
+  1. User can select a role from a dropdown and add it to a session.
+  2. Roles can be created/edited in a dedicated UI and saved as portable structures.
+  3. LLM responses are noticeably shorter (few sentences) for standard roles.
+  4. YAML export/import of a role profile works correctly.
+**Plans**:
+- [ ] 10-01-PLAN.md — Foundation & Schema (Wave 1)
+- [ ] 10-02-PLAN.md — Sync & Orchestration (Wave 2)
+- [ ] 10-03-PLAN.md — UI & Library Management (Wave 3)
+**UI hint**: yes
 
 ### Phase 11: Add Other Roles
 **Goal**: Expand the template library beyond the initial Six Thinking Hats to include other cognitive frameworks and expert personas.
@@ -161,8 +179,8 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 | 6. Tool Use & External Knowledge | 3/3 | Completed | 2026-03-30 |
 | 7. Advanced Orchestration & Branching | 0/3 | Not Started | - |
 | 8. Markdown Rendering in Chat | 3/3 | Completed | 2026-03-30 |
-| 9. More Customisation role | 0/0 | Not Started | - |
-| 10. Role Refinement & Expansion | 0/0 | Not Started | - |
+| 9. More Customisation role | 0/3 | Not Started | - |
+| 10. Role Refinement & Expansion | 3/3 | In Progress | - |
 | 11. Add Other Roles | 0/0 | Not Started | - |
 | 12. Onboarding Agent | 0/0 | Not Started | - |
 
