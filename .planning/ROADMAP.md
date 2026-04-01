@@ -10,7 +10,7 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 - [x] **Phase 4: Persona Management & Moderation** - Add interactive human-in-the-loop controls and custom persona creation.
 - [x] **Phase 5: Context & Reporting** - Finalize reporting features and handle long-running session context via summarization.
 - [x] **Phase 6: Tool Use & External Knowledge** - Implement function calling for personas and a RAG-lite knowledge base.
-- [ ] **Phase 7: Advanced Orchestration & Branching** - Add dynamic turn suggestion, consensus modes, and session forking.
+- [x] **Phase 7: Advanced Orchestration & Branching** - Add dynamic turn suggestion, consensus modes, and session forking.
 - [x] **Phase 8: Markdown Rendering in Chat** - Proper display of formatted text, lists, and tables in the UI.
 - [x] **Phase 9: More Customisation when defining the role** - Enhanced persona definition options.
 - [x] **Phase 10: Role Refinement & Expansion** - Design specialized roles and tailor existing ones for better roleplay.
@@ -112,9 +112,9 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
   3. User can fork a session from a past message and continue it independently.
   4. Visual tree allows clear navigation between multiple conversation paths.
 **Plans**:
-- [ ] 07-01-PLAN.md — Database & Backend Foundation (Wave 1)
-- [ ] 07-02-PLAN.md — Orchestrator Logic Upgrade (Wave 2)
-- [ ] 07-03-PLAN.md — UI Integration (Wave 3)
+- [x] 07-01-PLAN.md — Database & Backend Foundation (Wave 1)
+- [x] 07-02-PLAN.md — Orchestrator Logic Upgrade (Wave 2)
+- [x] 07-03-PLAN.md — UI Integration (Wave 3)
 **UI hint**: yes
 
 ### Phase 8: Markdown Rendering in Chat
@@ -162,10 +162,13 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 **UI hint**: yes
 
 ### Phase 11: Add Other Roles
-**Goal**: Expand the template library beyond the initial Six Thinking Hats to include other cognitive frameworks and expert personas.
+**Goal**: Expand the template library beyond the initial Six Thinking Hats to include other cognitive frameworks and expert personas, organized in a hierarchical structure.
 **Depends on**: Phase 10
-**Requirements**: TBD
-**Plans**: 0 plans
+**Requirements**: ROLE-SCAN, ROLE-SCHEMA, ROLE-CONTENT, ROLE-UI
+**Plans**: 3 plans
+- [ ] 11-01-PLAN.md — Schema and Sync Service
+- [ ] 11-02-PLAN.md — Role Library Expansion
+- [ ] 11-03-PLAN.md — Hierarchical UI
 
 ### Phase 12: Onboarding Agent for Problem Refinement
 **Goal**: Implement an agent that interacts with the user to clarify and refine their initial prompt before the round-table begins.
@@ -183,11 +186,11 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 | 4. Persona Management & Moderation | 3/3 | Completed | 2024-05-25 |
 | 5. Context & Reporting | 3/3 | Completed | 2026-03-30 |
 | 6. Tool Use & External Knowledge | 3/3 | Completed | 2026-03-30 |
-| 7. Advanced Orchestration & Branching | 0/3 | Not Started | - |
+| 7. Advanced Orchestration & Branching | 3/3 | Completed | 2026-03-30 |
 | 8. Markdown Rendering in Chat | 3/3 | Completed | 2026-03-30 |
 | 9. More Customisation role | 3/3 | Completed | 2026-03-30 |
 | 10. Role Refinement & Expansion | 3/3 | Completed | 2026-03-30 |
-| 11. Add Other Roles | 0/0 | Not Started | - |
+| 11. Add Other Roles | 0/3 | In Progress | - |
 | 12. Onboarding Agent | 0/0 | Not Started | - |
 
 ## Backlog
