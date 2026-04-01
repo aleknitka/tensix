@@ -10,12 +10,12 @@
 
 ## Current Position
 
-**Milestone 2: Intelligent Orchestration & Tools**
+**Phase 999.2: Separate Tab for Team Building**
 - **Status:** Completed
-- **Goal:** Evolve the SEQ into an adaptive, tool-aware, and user-guided system.
+- **Goal:** Move team building functionality to a separate tab to improve session chat history readability.
 - **Progress:** [▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆] 100%
 
-**Current Plan:** Completed Phase 12: Onboarding Agent. All Milestone 2 phases are now implemented and verified.
+**Current Plan:** Completed Phase 999.2. Sidebar now uses a tabbed layout (Team, Docs, Tools, Branches, Settings).
 
 ---
 
@@ -35,25 +35,14 @@
 ### Decisions
 - Added support for **Ollama Tool Use** via JSON schema.
 - **Milestone 2** evolved the SEQ into an adaptive system.
-- **Knowledge Base** (Phase 6) implemented using Full Context Injection.
-- **Markdown Rendering** (Phase 8) implemented using `react-markdown` and `Prism`.
-- **Phase 12 Complete**: Onboarding Agent for Problem Refinement is fully functional with state-driven transitions (`refining` -> `active`).
+- **Phase 999.2 Complete**: Sidebar refactored into a modular tabbed interface.
+- **Phase 12 Complete**: Onboarding Agent for Problem Refinement is fully functional.
 - **Phase 6 Complete**: Tools (`read_file`, `calculator`) and Knowledge Base are fully functional.
-- **Phase 10 Complete**: Portable YAML-based roles and anti-chattiness constraints active.
-- **Phase 9 Complete**: Advanced model parameters, visual branding, and prompt templates are functional.
-- **Phase 7 Complete**: "Conductor" mode (Full Auto/HITL), Consensus loop, "Total Clone" forking, and Visual Branch Tree are fully functional.
-- **Phase 11 Complete**: Hierarchical role storage, 17 new role templates across SCAMPER/Business/Tech/Creative, and collapsible category UI selection.
 
 ### Todos
 - [x] Milestone 1: Core Foundation & SEQ (Phases 1-5)
-- [x] Milestone 2: Intelligent Orchestration & Tools
-    - [x] Phase 6: Tool Use & External Knowledge
-    - [x] Phase 7: Advanced Orchestration & Branching
-    - [x] Phase 8: Markdown Rendering in Chat
-    - [x] Phase 9: More Customisation when defining the role
-    - [x] Phase 10: Role Refinement & Expansion
-    - [x] Phase 11: Add Other Roles & Hierarchical Selection
-    - [x] Phase 12: Onboarding Agent for Problem Refinement
+- [x] Milestone 2: Intelligent Orchestration & Tools (Phases 6-12)
+- [x] Phase 999.2: Separate Tab for Team Building
 
 ### Blockers
 - (None)
@@ -62,8 +51,7 @@
 
 ## Session Continuity
 
-**Current Session:** Milestone 2 Completion.
-**Last Action:** Implemented and verified Phase 12: Onboarding Agent.
+**Current Session:** Backlog Phase 999.2 Completion.
+**Last Action:** Implemented and verified Phase 999.2 (Sidebar Tabs).
 **Next Steps:**
-1. Final Milestone audit and cleanup.
-2. Prepare for Milestone 3 or maintenance.
+1. Check for next incomplete phase in the Backlog (999.3).

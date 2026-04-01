@@ -21,7 +21,7 @@ interface Model {
 
 interface RoundTableConfigProps {
   sessionId: string;
-  onStartEvaluation: (personaIds: string[], mode: string, maxTurns: number) => void;
+  onStartEvaluation: (personaIds: string[], overrideMode?: string, overrideMaxTurns?: number) => void;
   onStopEvaluation: () => void;
   isEvaluating: boolean;
 }
@@ -33,8 +33,6 @@ export default function RoundTableConfig({ sessionId, onStartEvaluation, onStopE
   const [selectedModel, setSelectedModel] = useState<string>('');
   const [isLibraryOpen, setIsLibraryOpen] = useState(false);
   const [assigningModelPersona, setAssigningModelPersona] = useState<Persona | null>(null);
-  const [mode, setMode] = useState<'sequential' | 'auto' | 'hitl'>('sequential');
-  const [maxTurns, setMaxTurns] = useState(10);
 
   const fetchPersonas = async () => {
     try {
@@ -126,7 +124,7 @@ export default function RoundTableConfig({ sessionId, onStartEvaluation, onStopE
             </button>
           ) : (
             <button
-              onClick={() => onStartEvaluation(selectedPersonaIds, mode, maxTurns)}
+              onClick={() => onStartEvaluation(selectedPersonaIds)}
               disabled={selectedPersonaIds.length === 0}
               className="flex items-center gap-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 px-6 py-2 rounded-lg font-bold hover:opacity-90 disabled:opacity-50 transition-all shadow-md active:scale-95"
             >
@@ -198,42 +196,6 @@ export default function RoundTableConfig({ sessionId, onStartEvaluation, onStopE
           </div>
         </div>
       )}
-
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-400">Orchestration Mode</label>
-          <div className="grid grid-cols-3 gap-1">
-            {(['sequential', 'auto', 'hitl'] as const).map((m) => (
-              <button
-                key={m}
-                onClick={() => setMode(m)}
-                className={`px-1 py-1.5 rounded-lg text-[9px] font-bold uppercase border transition-all ${
-                  mode === m 
-                    ? 'bg-zinc-900 text-white border-zinc-900 dark:bg-zinc-100 dark:text-zinc-900 dark:border-zinc-100' 
-                    : 'bg-zinc-50 dark:bg-zinc-800 text-zinc-500 border-zinc-200 dark:border-zinc-700 hover:border-zinc-400'
-                }`}
-              >
-                {m}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-400 flex justify-between">
-            Max Turns <span>{maxTurns}</span>
-          </label>
-          <input
-            type="range"
-            min="1"
-            max="20"
-            step="1"
-            value={maxTurns}
-            onChange={(e) => setMaxTurns(parseInt(e.target.value))}
-            className="w-full h-1.5 bg-zinc-200 dark:bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-zinc-900 dark:accent-zinc-100"
-          />
-        </div>
-      </div>
 
       <div className="space-y-4">
         <div className="flex items-center justify-between">
