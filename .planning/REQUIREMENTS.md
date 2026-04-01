@@ -1,92 +1,34 @@
-# Requirements: Tensix
+# Requirements: Tensix Milestone 2
 
-**Defined:** 2026-03-30
-**Core Value:** Users can evaluate and refine ideas through a structured, multi-perspective LLM dialogue that reduces bias and surfaces hidden risks or opportunities.
+## Milestone Goal
 
-## v1 Requirements
+Evolve the SEQ (Serial Expert Queue) from a static sequential list into an intelligent, tool-enabled orchestration system that can dynamically adapt to the conversation and provide higher-quality, evidence-based audits.
 
-Requirements for initial release, focusing on local-first round-table evaluations with the "Six Thinking Hats" method.
+## Functional Requirements
 
-### Model Connectivity
+### Tool Use (Function Calling)
+- **TOOL-01**: The system must support tool definitions (JSON schema) for LLM providers that support it (Ollama, OpenRouter).
+- **TOOL-02**: Personas can be assigned specific tools (e.g., "Web Search", "Calculator", "File Read").
+- **TOOL-03**: The orchestrator must handle the multi-step "call -> execute -> response" loop transparently.
 
-- [ ] **CONN-01**: Connect to a local Ollama instance with health checks.
-- [ ] **CONN-02**: Connect to a local LM Studio instance (OpenAI-compatible).
-- [ ] **CONN-03**: Configure custom OpenAI-compatible endpoints (e.g., OpenRouter).
-- [ ] **CONN-04**: Automatic model capability detection (checking if the model supports the required prompt format).
+### Intelligent Orchestration
+- **ORCH-05**: Dynamic Hat Suggestion: A "Blue Hat" meta-agent can suggest the next most relevant hat based on the current discussion state.
+- **ORCH-06**: Multi-Round Consensus: The user can enable a "Consensus" mode where hats continue to speak until a defined level of agreement is reached or a maximum turn count is hit.
+- **ORCH-07**: Session Branching: Users can "fork" a discussion from any previous message to explore an alternative path without losing the original.
 
-### Persona Management
-
-- [ ] **PERS-01**: Pre-built "Six Thinking Hats" templates with optimized system prompts.
-- [ ] **PERS-02**: User can create, edit, and save custom personas with specific system prompts.
-- [ ] **PERS-03**: Assign specific LLM models to specific personas in the round-table.
-
-### Orchestration
-
-- [ ] **ORCH-01**: Implement **Serial Expert Queue (SEQ)**: sequential model execution with explicit loading/unloading to manage GPU VRAM.
-- [ ] **ORCH-02**: Moderator-led turn-taking: a "Blue Hat" LLM or human moderator decides who speaks next.
-- [ ] **ORCH-03**: Automated context management: summarization or rolling window to prevent context overflow.
-- [ ] **ORCH-04**: Session persistence: save and reload round-table discussions from SQLite.
+### Knowledge Integration
+- **KNOW-01**: Users can upload text files (PDF, TXT, MD) to a session's knowledge base.
+- **KNOW-02**: All participants in that session can reference the knowledge base using a RAG-lite approach or full-context injection (if supported by the model).
 
 ### User Interface
+- **UI-05**: Tool Execution Visibility: Show a clear indicator when a persona is using a tool (including tool name and parameters).
+- **UI-06**: Branching UI: A visual way (e.g., a tree or simple "Back to original" control) to navigate session forks.
 
-- [ ] **UI-01**: Real-time "Debate" view showing participants and their responses in a stream.
-- [ ] **UI-02**: "Moderator Dashboard" for the user to trigger turns, edit messages, or override participant responses.
-- [ ] **UI-03**: Model & Connection status indicators for local backends.
-- [ ] **UI-04**: "Final Report" generation: synthesis of the discussion into a structured audit document.
+## Non-Functional Requirements
+- **PERF-01**: Tool execution must not add more than 2 seconds of overhead (excluding network time for APIs).
+- **SEC-01**: Tools must run in a sandboxed or restricted environment (especially file access).
 
-### API & Integration
-
-- [ ] **API-01**: Reusable REST API for starting a round-table evaluation from external scripts.
-- [ ] **API-02**: Export discussion history to JSON/Markdown for further analysis.
-
-## v2 Requirements
-
-### Advanced Logic
-
-- **ADV-01**: Blind Peer Review: agents critique each other without knowing who sent the message (reduces sycophancy).
-- **ADV-02**: Reasoning Trees: explore multiple branching paths for a single idea evaluation.
-- **ADV-03**: Multi-GPU support: parallelize the round-table if hardware permits.
-
-### Media & Collaborative
-
-- **COLL-01**: Multi-user collaboration on a single "round-table" session.
-- **MEDIA-01**: Voice synthesis for participants during the debate.
-
-## Out of Scope
-
-| Feature | Reason |
-|---------|--------|
-| Image Generation | Outside core reasoning scope for v1. |
-| Web Scraping | High complexity, rely on user provided text or external tools first. |
-| Non-OpenAI-Compatible APIs | High maintenance cost; focus on standard local/cloud interfaces. |
-
-## Traceability
-
-| Requirement | Phase | Status |
-|-------------|-------|--------|
-| CONN-01 | Phase 2 | Pending |
-| CONN-02 | Phase 2 | Pending |
-| CONN-03 | Phase 2 | Pending |
-| CONN-04 | Phase 2 | Pending |
-| PERS-01 | Phase 3 | Pending |
-| PERS-02 | Phase 4 | Pending |
-| PERS-03 | Phase 3 | Pending |
-| ORCH-01 | Phase 3 | Pending |
-| ORCH-02 | Phase 4 | Pending |
-| ORCH-03 | Phase 5 | Pending |
-| ORCH-04 | Phase 1 | Pending |
-| UI-01 | Phase 3 | Pending |
-| UI-02 | Phase 4 | Pending |
-| UI-03 | Phase 1 | Pending |
-| UI-04 | Phase 5 | Pending |
-| API-01 | Phase 1 | Pending |
-| API-02 | Phase 5 | Pending |
-
-**Coverage:**
-- v1 requirements: 17 total
-- Mapped to phases: 17
-- Unmapped: 0 ✓
-
----
-*Requirements defined: 2026-03-30*
-*Last updated: 2026-03-30 after initialization*
+## Success Criteria
+1. At least one persona successfully uses a tool (e.g., Web Search) to bring external data into a debate.
+2. The orchestrator can autonomously suggest the next turn speaker based on conversation context.
+3. A user can successfully fork a session and see both versions in their history.

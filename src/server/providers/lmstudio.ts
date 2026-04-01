@@ -1,4 +1,4 @@
-import { BaseProvider, Model, Message } from './types';
+import { BaseProvider, Model, Message, GenerateChunk, ModelOptions } from './types';
 
 export class LMStudioProvider extends BaseProvider {
   private baseUrl: string;
@@ -33,7 +33,7 @@ export class LMStudioProvider extends BaseProvider {
     }
   }
 
-  async *generate(modelId: string, messages: Message[]): AsyncIterable<string> {
+  async *generate(modelId: string, messages: Message[], tools?: any[], options?: ModelOptions): AsyncIterable<GenerateChunk> {
     try {
       const response = await fetch(`${this.baseUrl}/v1/chat/completions`, {
         method: 'POST',
@@ -41,7 +41,13 @@ export class LMStudioProvider extends BaseProvider {
         body: JSON.stringify({
           model: modelId,
           messages: messages,
+          tools: tools,
           stream: true,
+          temperature: options?.temperature,
+          top_p: options?.top_p,
+          max_tokens: options?.max_tokens,
+          presence_penalty: options?.presence_penalty,
+          frequency_penalty: options?.frequency_penalty,
         }),
       });
 
@@ -67,8 +73,13 @@ export class LMStudioProvider extends BaseProvider {
 
           try {
             const json = JSON.parse(cleanLine);
-            const content = json.choices[0]?.delta?.content;
-            if (content) yield content;
+            const delta = json.choices[0]?.delta;
+            if (delta?.content) {
+              yield { text: delta.content };
+            }
+            if (delta?.tool_calls) {
+              yield { toolCalls: delta.tool_calls };
+            }
           } catch (e) {
             // Partial JSON - wait for next chunk
           }

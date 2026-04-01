@@ -2,18 +2,23 @@ import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { db } from './db/index'
-import { sessions, messages, providers, personas as personaTable } from './db/schema'
-import { eq, desc, asc } from 'drizzle-orm'
+import { sessions, messages, providers, personas as personaTable, documents } from './db/schema'
+import { eq, desc, asc, and } from 'drizzle-orm'
 import { v4 as uuidv4 } from 'uuid'
 import { OllamaProvider } from './providers/ollama'
 import { LMStudioProvider } from './providers/lmstudio'
 import { OpenRouterProvider } from './providers/openrouter'
 import { Message } from './providers/types'
 import { stream } from 'hono/streaming'
-import { runRoundTable, getProviderAdapter } from './orchestrator'
+import { runRoundTable, getProviderAdapter, applyChattinessConstraint } from './orchestrator'
 import { seedThinkingHats } from './db/seeds/personas'
+import { syncRoles } from './services/role-sync'
+import { RefinementService } from './services/refinement-service'
 
 const app = new Hono()
+
+// Run role sync on startup
+syncRoles().catch(err => console.error('Initial role sync failed:', err))
 
 app.use('/*', cors())
 
@@ -94,6 +99,13 @@ app.get('/sessions', async (c) => {
   return c.json(result)
 })
 
+app.get('/sessions/:id', async (c) => {
+  const id = c.req.param('id')
+  const [result] = await db.select().from(sessions).where(eq(sessions.id, id))
+  if (!result) return c.json({ error: 'Session not found' }, 404)
+  return c.json(result)
+})
+
 app.post('/sessions', async (c) => {
   const { title } = await c.req.json()
   const id = uuidv4()
@@ -101,10 +113,38 @@ app.post('/sessions', async (c) => {
   await db.insert(sessions).values({
     id,
     title: title || 'New Session',
+    status: 'refining',
     createdAt: now,
     updatedAt: now
   })
-  return c.json({ id, title })
+  return c.json({ id, title, status: 'refining' })
+})
+
+app.get('/sessions/:id/refine', async (c) => {
+  const id = c.req.param('id')
+  
+  c.header('Content-Type', 'text/event-stream')
+  c.header('Cache-Control', 'no-cache')
+  c.header('Connection', 'keep-alive')
+
+  return stream(c, async (stream) => {
+    for await (const chunk of RefinementService.runRefinement(id)) {
+      await stream.write(`data: ${JSON.stringify(chunk)}\n\n`)
+    }
+  })
+})
+
+app.post('/sessions/:id/refine/confirm', async (c) => {
+  const id = c.req.param('id')
+  const { refinedPrompt } = await c.req.json()
+  const result = await RefinementService.confirmRefinement(id, refinedPrompt)
+  return c.json(result)
+})
+
+app.post('/sessions/:id/refine/skip', async (c) => {
+  const id = c.req.param('id')
+  const result = await RefinementService.skipRefinement(id)
+  return c.json(result)
 })
 
 app.put('/sessions/:id', async (c) => {
@@ -120,6 +160,76 @@ app.delete('/sessions/:id', async (c) => {
   return c.json({ success: true })
 })
 
+// Document routes
+app.get('/api/sessions/:id/documents', async (c) => {
+  const sessionId = c.req.param('id')
+  const result = await db.select().from(documents).where(eq(documents.sessionId, sessionId))
+  return c.json(result)
+})
+
+app.post('/api/sessions/:id/documents', async (c) => {
+  const sessionId = c.req.param('id')
+  const { name, content, type } = await c.req.json()
+  const id = uuidv4()
+  await db.insert(documents).values({
+    id,
+    sessionId,
+    name,
+    content,
+    type,
+    createdAt: new Date()
+  })
+  return c.json({ id })
+})
+
+app.delete('/api/documents/:id', async (c) => {
+  const id = c.req.param('id')
+  await db.delete(documents).where(eq(documents.id, id))
+  return c.json({ success: true })
+})
+
+app.post('/sessions/:id/fork', async (c) => {
+  const originalId = c.req.param('id')
+  const { messageId } = await c.req.json()
+
+  const [parent] = await db.select().from(sessions).where(eq(sessions.id, originalId))
+  if (!parent) return c.json({ error: 'Parent session not found' }, 404)
+
+  const newSessionId = uuidv4()
+  const now = new Date()
+
+  // 1. Create new session
+  await db.insert(sessions).values({
+    id: newSessionId,
+    title: `Fork: ${parent.title}`,
+    parentId: originalId,
+    createdAt: now,
+    updatedAt: now
+  })
+
+  // 2. Clone history
+  const history = await db.select().from(messages)
+    .where(eq(messages.sessionId, originalId))
+    .orderBy(asc(messages.timestamp))
+
+  const forkPointIndex = history.findIndex(m => m.id === messageId)
+  if (forkPointIndex === -1 && messageId) {
+    return c.json({ error: 'Fork point message not found' }, 404)
+  }
+
+  const messagesToClone = messageId ? history.slice(0, forkPointIndex + 1) : history
+
+  for (const m of messagesToClone) {
+    await db.insert(messages).values({
+      ...m,
+      id: uuidv4(),
+      sessionId: newSessionId
+    })
+  }
+
+  return c.json({ id: newSessionId })
+})
+
 // System routes
 app.post('/system/reset', async (c) => {
   await db.delete(messages)
@@ -131,7 +241,22 @@ app.post('/system/reset', async (c) => {
 
 app.get('/sessions/:id/messages', async (c) => {
   const id = c.req.param('id')
-  const result = await db.select().from(messages).where(eq(messages.sessionId, id)).orderBy(desc(messages.timestamp))
+  const result = await db.select({
+    id: messages.id,
+    role: messages.role,
+    content: messages.content,
+    personaId: messages.personaId,
+    timestamp: messages.timestamp,
+    metadata: messages.metadata,
+    personaName: personaTable.name,
+    personaIcon: personaTable.icon_id,
+    personaColor: personaTable.color_accent
+  })
+  .from(messages)
+  .leftJoin(personaTable, eq(messages.personaId, personaTable.id))
+  .where(eq(messages.sessionId, id))
+  .orderBy(desc(messages.timestamp))
+  
   return c.json(result)
 })
 
@@ -189,6 +314,45 @@ app.delete('/personas/:id', async (c) => {
   const id = c.req.param('id')
   await db.delete(personaTable).where(eq(personaTable.id, id))
   return c.json({ success: true })
+})
+
+app.post('/personas/test', async (c) => {
+  const { persona, prompt } = await c.req.json()
+  
+  if (!persona.providerId || !persona.modelId) {
+    return c.json({ error: 'Provider and Model are required for testing' }, 400)
+  }
+
+  const adapter = await getProviderAdapter(persona.providerId)
+  if (!adapter) return c.json({ error: 'Adapter not found' }, 500)
+
+  const constrainedPrompt = applyChattinessConstraint(persona, persona.systemPrompt)
+  const messages: Message[] = [
+    { role: 'system', content: constrainedPrompt },
+    { role: 'user', content: prompt }
+  ]
+
+  const options = {
+    temperature: persona.temperature,
+    top_p: persona.top_p,
+    max_tokens: persona.max_tokens,
+    presence_penalty: persona.presence_penalty,
+    frequency_penalty: persona.frequency_penalty
+  }
+
+  c.header('Content-Type', 'text/event-stream')
+  c.header('Cache-Control', 'no-cache')
+  c.header('Connection', 'keep-alive')
+
+  return stream(c, async (stream) => {
+    try {
+      for await (const chunk of adapter.generate(persona.modelId, messages, [], options)) {
+        await stream.write(`data: ${JSON.stringify({ text: chunk.text || '' })}\n\n`)
+      }
+    } catch (err) {
+      await stream.write(`data: ${JSON.stringify({ error: 'Generation failed' })}\n\n`)
+    }
+  })
 })
 
 app.post('/personas/seed', async (c) => {
@@ -285,10 +449,16 @@ app.post('/sessions/:id/report', async (c) => {
     { role: 'user', content: prompt }
   ]
 
+  if (!persona.modelId) return c.json({ error: 'No model assigned to synthesis persona' }, 500)
+
   let report = ''
   try {
     for await (const chunk of adapter.generate(persona.modelId, msgContext)) {
-      report += chunk
+      if (typeof chunk === 'string') {
+        report += chunk
+      } else if (chunk.text) {
+        report += chunk.text
+      }
     }
 
     // Save report to database
@@ -313,6 +483,8 @@ app.post('/sessions/:id/report', async (c) => {
 app.get('/sessions/:id/evaluate', async (c) => {
   const sessionId = c.req.param('id')
   const personaIds = c.req.query('personaIds')?.split(',') || []
+  const mode = (c.req.query('mode') as any) || 'sequential'
+  const maxTurns = parseInt(c.req.query('maxTurns') || '10')
 
   if (personaIds.length === 0) {
     return c.json({ error: 'No personas selected' }, 400)
@@ -328,7 +500,7 @@ app.get('/sessions/:id/evaluate', async (c) => {
       aborted = true;
     });
 
-    for await (const step of runRoundTable(sessionId, personaIds)) {
+    for await (const step of runRoundTable(sessionId, personaIds, mode, maxTurns)) {
       if (aborted) break;
       await stream.write(`data: ${JSON.stringify(step)}\n\n`)
     }
