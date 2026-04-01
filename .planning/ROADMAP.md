@@ -165,10 +165,12 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 **Goal**: Expand the template library beyond the initial Six Thinking Hats to include other cognitive frameworks and expert personas, organized in a hierarchical structure.
 **Depends on**: Phase 10
 **Requirements**: ROLE-SCAN, ROLE-SCHEMA, ROLE-CONTENT, ROLE-UI
-**Plans**: 3 plans
+**Plans**: 4 plans
 - [ ] 11-01-PLAN.md — Schema and Sync Service
-- [ ] 11-02-PLAN.md — Role Library Expansion
+- [ ] 11-02-PLAN.md — Role Library Expansion: SCAMPER
+- [ ] 11-04-PLAN.md — Role Library Expansion: Domain Experts
 - [ ] 11-03-PLAN.md — Hierarchical UI
+**UI hint**: yes
 
 ### Phase 12: Onboarding Agent for Problem Refinement
 **Goal**: Implement an agent that interacts with the user to clarify and refine their initial prompt before the round-table begins.
@@ -190,7 +192,7 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 | 8. Markdown Rendering in Chat | 3/3 | Completed | 2026-03-30 |
 | 9. More Customisation role | 3/3 | Completed | 2026-03-30 |
 | 10. Role Refinement & Expansion | 3/3 | Completed | 2026-03-30 |
-| 11. Add Other Roles | 0/3 | In Progress | - |
+| 11. Add Other Roles | 0/4 | In Progress | - |
 | 12. Onboarding Agent | 0/0 | Not Started | - |
 
 ## Backlog
