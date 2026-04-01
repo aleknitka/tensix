@@ -1,11 +1,28 @@
 import { db } from './db/index';
-import { providers, personas, messages, sessions } from './db/schema';
+import { providers, personas, messages, sessions, documents } from './db/schema';
 import { eq, asc } from 'drizzle-orm';
 import { OllamaProvider } from './providers/ollama';
 import { LMStudioProvider } from './providers/lmstudio';
 import { OpenRouterProvider } from './providers/openrouter';
-import { BaseProvider, Message } from './providers/types';
+import { BaseProvider, Message, ToolCall } from './providers/types';
 import { v4 as uuidv4 } from 'uuid';
+import { toolRegistry } from './tools/registry';
+import { initializeTools } from './tools/implementations';
+
+// Ensure tools are registered
+initializeTools();
+
+export function applyChattinessConstraint(persona: any, prompt: string): string {
+  let suffix = "";
+  
+  if (persona.chattiness_limit) {
+    suffix = `\n\nConstraint: Your response must be under ${persona.chattiness_limit} sentences.`;
+  } else if (persona.role_type !== 'researcher' && persona.role_type !== 'summarizer') {
+    suffix = "\n\nKeep your response extremely concise (max 3-4 sentences) unless your role is 'researcher' or 'summarizer'.";
+  }
+
+  return prompt + suffix;
+}
 
 export async function getProviderAdapter(providerId: string): Promise<BaseProvider | null> {
   const [p] = await db.select().from(providers).where(eq(providers.id, providerId));
@@ -21,6 +38,8 @@ export interface OrchestrationStep {
   personaId: string;
   content: string;
   isDone: boolean;
+  type?: 'text' | 'suggestion' | 'system';
+  suggestedPersonaId?: string;
 }
 
 export async function summarizeMessages(msgs: Message[]): Promise<string> {
@@ -43,8 +62,6 @@ export async function summarizeMessages(msgs: Message[]): Promise<string> {
     const [firstProvider] = await db.select().from(providers).where(eq(providers.isEnabled, true)).limit(1);
     if (firstProvider) {
       adapter = await getProviderAdapter(firstProvider.id);
-      // If we don't have a modelId, we might be in trouble, but let's assume we can find one or it's provided in some way.
-      // For now, let's just try to find ANY persona's modelId if targetModelId is empty.
       if (!targetModelId) {
         const [anyPersona] = await db.select().from(personas).limit(1);
         targetModelId = anyPersona?.modelId || 'default';
@@ -64,7 +81,7 @@ export async function summarizeMessages(msgs: Message[]): Promise<string> {
   let summary = '';
   try {
     for await (const chunk of adapter.generate(targetModelId, msgContext)) {
-      summary += chunk;
+      summary += chunk.text || '';
     }
     return summary.trim();
   } catch (err) {
@@ -90,7 +107,7 @@ export async function summarizeSession(sessionId: string, adapter: BaseProvider,
   let summary = '';
   try {
     for await (const chunk of adapter.generate(modelId, msgContext)) {
-      summary += chunk;
+      summary += chunk.text || '';
     }
     await db.update(sessions).set({ summary }).where(eq(sessions.id, sessionId));
     return summary;
@@ -100,12 +117,23 @@ export async function summarizeSession(sessionId: string, adapter: BaseProvider,
   }
 }
 
-export async function* runRoundTable(sessionId: string, personaIds: string[]): AsyncIterable<OrchestrationStep> {
+export async function* runRoundTable(
+  sessionId: string, 
+  personaIds: string[],
+  mode: 'sequential' | 'auto' | 'hitl' = 'sequential',
+  maxTurns: number = 10
+): AsyncIterable<OrchestrationStep> {
   // 1. Get session details and history
   const [session] = await db.select().from(sessions).where(eq(sessions.id, sessionId));
   const history = await db.select().from(messages)
     .where(eq(messages.sessionId, sessionId))
     .orderBy(asc(messages.timestamp));
+
+  // Fetch session documents for context injection
+  const sessionDocs = await db.select().from(documents).where(eq(documents.sessionId, sessionId));
+  const docContext = sessionDocs.length > 0 
+    ? `ATTACHED DOCUMENTS:\n${sessionDocs.map(d => `--- ${d.name} ---\n${d.content}`).join('\n\n')}\n\n`
+    : '';
 
   let baseMessages: Message[] = [];
   
@@ -114,7 +142,7 @@ export async function* runRoundTable(sessionId: string, personaIds: string[]): A
     content: m.content
   }));
 
-  // Task 2: Automatic Summarization Trigger
+  // Automatic Summarization Trigger
   const MAX_MESSAGES = 10;
   if (rawMessages.length > MAX_MESSAGES) {
     const summaryText = await summarizeMessages(rawMessages);
@@ -147,75 +175,165 @@ export async function* runRoundTable(sessionId: string, personaIds: string[]): A
     baseMessages.push(...rawMessages);
   }
 
-  // 2. Run each persona sequentially
-  for (const personaId of personaIds) {
-    const [persona] = await db.select().from(personas).where(eq(personas.id, personaId));
-    if (!persona || !persona.providerId) continue;
+  // Inject document context if present
+  if (docContext) {
+    baseMessages.unshift({ role: 'system', content: docContext });
+  }
+
+  const toolDefinitions = toolRegistry.getToolDefinitions();
+  let currentTurn = 0;
+  let activePersonaIds = [...personaIds];
+
+  // Identify Conductor (Blue Hat)
+  const [blueHat] = await db.select().from(personas).where(eq(personas.name, 'Blue Hat')).limit(1);
+
+  // 2. Loop through turns
+  while (currentTurn < maxTurns) {
+    let nextPersonaId: string | null = null;
+
+    if (mode === 'sequential') {
+      nextPersonaId = activePersonaIds[currentTurn % activePersonaIds.length];
+      if (currentTurn >= activePersonaIds.length) break; 
+    } else {
+      // Conductor Mode
+      if (!blueHat || !blueHat.providerId || !blueHat.modelId) {
+        nextPersonaId = activePersonaIds[currentTurn % activePersonaIds.length];
+      } else {
+        const conductorAdapter = await getProviderAdapter(blueHat.providerId);
+        if (!conductorAdapter) {
+          nextPersonaId = activePersonaIds[currentTurn % activePersonaIds.length];
+        } else {
+          const availablePersonas = await db.select().from(personas);
+          const personaListStr = availablePersonas
+            .filter(p => activePersonaIds.includes(p.id))
+            .map(p => `- ${p.id}: ${p.name} (${p.role}) - ${p.description || ''}`)
+            .join('\n');
+
+          const conductorPrompt = `You are the Blue Hat Conductor. Your goal is to select the next most relevant expert to speak OR identify if consensus has been reached.
+
+Available Experts:
+${personaListStr}
+
+Conversation Context:
+${baseMessages.slice(-5).map(m => `[${m.role}]: ${m.content.slice(0, 200)}...`).join('\n')}
+
+Output Rules:
+1. If you believe enough perspectives have been shared and a conclusion can be drawn: Output ONLY "[CONSENSUS_REACHED]".
+2. Otherwise: Output ONLY the personaId of the next expert who should speak.
+3. Choose from the provided list of IDs.`;
+
+          let conductorDecision = '';
+          for await (const chunk of conductorAdapter.generate(blueHat.modelId, [{ role: 'system', content: conductorPrompt }])) {
+            conductorDecision += chunk.text || '';
+          }
+
+          if (conductorDecision.includes('[CONSENSUS_REACHED]')) {
+            yield { personaId: 'SYSTEM', content: 'Consensus reached. Ending round table.', isDone: true, type: 'system' };
+            break;
+          }
+
+          nextPersonaId = activePersonaIds.find(id => conductorDecision.includes(id)) || activePersonaIds[0];
+
+          if (mode === 'hitl') {
+            yield { 
+              personaId: blueHat.id, 
+              content: `suggests ${nextPersonaId} speaks next.`, 
+              isDone: false, 
+              type: 'suggestion',
+              suggestedPersonaId: nextPersonaId 
+            };
+            return; 
+          }
+        }
+      }
+    }
+
+    if (!nextPersonaId) break;
+
+    const [persona] = await db.select().from(personas).where(eq(personas.id, nextPersonaId));
+    if (!persona || !persona.providerId || !persona.modelId) {
+      currentTurn++;
+      continue;
+    }
 
     const adapter = await getProviderAdapter(persona.providerId);
-    if (!adapter) continue;
+    if (!adapter) {
+      currentTurn++;
+      continue;
+    }
 
+    const constrainedSystemPrompt = applyChattinessConstraint(persona, persona.systemPrompt);
     const personaMessages: Message[] = [
-      { role: 'system', content: persona.systemPrompt },
+      { role: 'system', content: constrainedSystemPrompt },
       ...baseMessages
     ];
 
+    let isPersonaDone = false;
     let fullResponse = '';
-    
-    // Stream generation
-    try {
-      for await (const chunk of adapter.generate(persona.modelId, personaMessages)) {
-        fullResponse += chunk;
-        yield {
-          personaId,
-          content: chunk,
-          isDone: false
-        };
+
+    while (!isPersonaDone) {
+      let pendingToolCalls: ToolCall[] = [];
+      try {
+        for await (const chunk of adapter.generate(persona.modelId, personaMessages, toolDefinitions)) {
+          if (chunk.toolCalls) pendingToolCalls.push(...chunk.toolCalls);
+          if (chunk.text) {
+            fullResponse += chunk.text;
+            yield { personaId: persona.id, content: chunk.text, isDone: false, type: 'text' };
+          }
+        }
+
+        if (pendingToolCalls.length > 0) {
+          personaMessages.push({ role: 'assistant', content: fullResponse, tool_calls: pendingToolCalls });
+          for (const tc of pendingToolCalls) {
+            const tool = toolRegistry.getTool(tc.function.name);
+            let result = '';
+            try {
+              if (!tool) throw new Error(`Tool ${tc.function.name} not found`);
+              const args = JSON.parse(tc.function.arguments);
+              yield { personaId: persona.id, content: ` [Using ${tc.function.name}...] `, isDone: false, type: 'system' };
+              result = await tool.execute(args);
+            } catch (err) {
+              result = `Error executing tool: ${err instanceof Error ? err.message : String(err)}`;
+            }
+            await db.insert(messages).values({
+              id: uuidv4(),
+              sessionId,
+              personaId: persona.id,
+              role: 'assistant',
+              content: `Used tool: ${tc.function.name}`,
+              metadata: JSON.stringify({ toolCall: tc, result }),
+              timestamp: new Date()
+            });
+            personaMessages.push({ role: 'tool', tool_call_id: tc.id, content: result });
+          }
+        } else {
+          isPersonaDone = true;
+          await db.insert(messages).values({
+            id: uuidv4(),
+            sessionId,
+            personaId: persona.id,
+            role: 'assistant',
+            content: fullResponse,
+            timestamp: new Date()
+          });
+          baseMessages.push({ role: 'assistant', content: fullResponse });
+          yield { personaId: persona.id, content: '', isDone: true, type: 'text' };
+        }
+      } catch (error) {
+        yield { personaId: persona.id, content: ` [Error: ${error instanceof Error ? error.message : String(error)}]`, isDone: true, type: 'system' };
+        isPersonaDone = true;
       }
-
-      // Save message to DB
-      const messageId = uuidv4();
-      await db.insert(messages).values({
-        id: messageId,
-        sessionId,
-        personaId,
-        role: 'assistant',
-        content: fullResponse,
-        timestamp: new Date()
-      });
-
-      // Update baseMessages for next persona
-      baseMessages.push({ role: 'assistant', content: fullResponse });
-
-      yield {
-        personaId,
-        content: '',
-        isDone: true
-      };
-
-      // Periodic summarization (every 8 messages)
-      const currentHistory = await db.select().from(messages).where(eq(messages.sessionId, sessionId));
-      if (currentHistory.length % 8 === 0) {
-        await summarizeSession(sessionId, adapter, persona.modelId);
-      }
-
-    } catch (error) {
-      console.error(`Error during generation for persona ${persona.name}:`, error);
-      yield {
-        personaId,
-        content: ` [Error: ${error instanceof Error ? error.message : String(error)}]`,
-        isDone: true
-      };
-    } finally {
-      // Always try to unload model to free VRAM
-      await adapter.unload(persona.modelId);
     }
+
+    currentTurn++;
+    await adapter.unload(persona.modelId);
   }
 
   // Final completion signal
   yield {
     personaId: 'SYSTEM',
     content: '',
-    isDone: true
+    isDone: true,
+    type: 'system'
   };
 }

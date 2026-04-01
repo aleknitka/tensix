@@ -1,14 +1,20 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { User, Bot, Send, Loader2, Trash2, Edit2, Save, X } from 'lucide-react';
+import { User, Bot, Send, Loader2, Trash2, Edit2, Save, X, Terminal, GitFork } from 'lucide-react';
+import Markdown from './Markdown';
+import { getIconById } from './IconPicker';
+import { getBorderColorClass, getTextColorClass } from './ColorPicker';
 
 interface Message {
   id: string;
   role: string;
   content: string;
   personaId?: string | null;
-  personaName?: string;
+  personaName?: string | null;
+  personaIcon?: string | null;
+  personaColor?: string | null;
+  metadata?: string | null;
   timestamp: string;
 }
 
@@ -18,10 +24,11 @@ interface DebateViewProps {
   onSendMessage: (content: string) => void;
   onDeleteMessage: (id: string) => void;
   onUpdateMessage: (id: string, content: string) => void;
+  onForkMessage?: (messageId: string) => void;
   isLoading?: boolean;
 }
 
-export default function DebateView({ messages, streamingMessage, onSendMessage, onDeleteMessage, onUpdateMessage, isLoading }: DebateViewProps) {
+export default function DebateView({ messages, streamingMessage, onSendMessage, onDeleteMessage, onUpdateMessage, onForkMessage, isLoading }: DebateViewProps) {
   const [input, setInput] = useState('');
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editContent, setEditContent] = useState('');
@@ -77,16 +84,51 @@ export default function DebateView({ messages, streamingMessage, onSendMessage, 
 
         {[...messages].sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()).map((m) => {
           const isAuditReport = m.content.includes('Final Audit Report') || m.personaName === 'Blue Hat';
+          const toolData = m.metadata ? JSON.parse(m.metadata) : null;
+          
+          if (toolData?.toolCall) {
+            return (
+              <div key={m.id} className="flex justify-start ml-14 animate-in fade-in slide-in-from-left-4 duration-500">
+                <div className="bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800/50 rounded-2xl p-4 flex flex-col gap-3 shadow-sm min-w-[300px] max-w-[600px]">
+                  <div className="flex items-center justify-between border-b border-amber-100 dark:border-amber-900/20 pb-2">
+                    <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400">
+                      <Terminal className="w-4 h-4" />
+                      <span className="text-[10px] font-black uppercase tracking-widest">Tool Execution</span>
+                    </div>
+                    <span className="bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-tight border border-amber-200 dark:border-amber-700/50">
+                      {toolData.toolCall.function.name}
+                    </span>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className="space-y-1.5">
+                      <div className="text-[10px] font-bold text-amber-800/60 dark:text-amber-200/40 uppercase tracking-widest pl-1">Arguments</div>
+                      <pre className="text-[11px] font-mono text-amber-900 dark:text-amber-100 bg-white dark:bg-black/40 p-3 rounded-xl overflow-x-auto whitespace-pre-wrap break-all shadow-inner border border-amber-100 dark:border-amber-900/30">
+                        {toolData.toolCall.function.arguments}
+                      </pre>
+                    </div>
+                    {toolData.result && (
+                      <div className="space-y-1.5">
+                        <div className="text-[10px] font-bold text-emerald-800/60 dark:text-emerald-200/40 uppercase tracking-widest pl-1">Result</div>
+                        <div className="text-[11px] font-mono text-emerald-900 dark:text-emerald-100 bg-emerald-50/50 dark:bg-emerald-900/20 p-3 rounded-xl overflow-x-auto whitespace-pre-wrap break-all border border-emerald-100 dark:border-emerald-800/30 shadow-inner">
+                          {toolData.result}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          }
+
+          const IconComp = m.personaIcon ? getIconById(m.personaIcon) : (m.role === 'user' ? User : Bot);
+          const accentColor = m.personaColor || (isAuditReport ? 'blue' : 'slate');
           
           return (
             <div key={m.id} className={`flex gap-4 group ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               {m.role !== 'user' && (
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 border shadow-sm ${
-                  isAuditReport 
-                    ? 'bg-blue-50 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800 text-blue-500' 
-                    : 'bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-500'
-                }`}>
-                  <Bot className="w-6 h-6" />
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 border shadow-sm ${getTextColorClass(accentColor)} bg-white dark:bg-zinc-900 ${getBorderColorClass(accentColor)}`}>
+                  <IconComp className="w-6 h-6" />
                 </div>
               )}
               <div className={`max-w-[85%] space-y-1 flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'}`}>
@@ -100,7 +142,7 @@ export default function DebateView({ messages, streamingMessage, onSendMessage, 
                     </>
                   ) : (
                     <>
-                      <span className={`text-[10px] font-bold uppercase tracking-widest ${isAuditReport ? 'text-blue-500' : 'text-zinc-400'}`}>
+                      <span className={`text-[10px] font-bold uppercase tracking-widest ${getTextColorClass(accentColor)}`}>
                         {m.personaName || (isAuditReport ? 'Blue Hat' : 'Expert')}
                       </span>
                       {isAuditReport && (
@@ -132,14 +174,14 @@ export default function DebateView({ messages, streamingMessage, onSendMessage, 
                     </div>
                   ) : (
                     <>
-                      <div className={`p-5 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
+                      <div className={`rounded-2xl text-sm leading-relaxed border-l-4 ${
                         m.role === 'user'
-                          ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 shadow-lg'
+                          ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 shadow-lg p-4'
                           : isAuditReport
-                          ? 'bg-blue-50/50 dark:bg-blue-900/10 border-2 border-blue-100 dark:border-blue-900/30 text-zinc-800 dark:text-zinc-200 shadow-sm'
-                          : 'bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 shadow-sm'
+                          ? 'bg-blue-50/50 dark:bg-blue-900/10 border-blue-100 dark:border-blue-900/30 text-zinc-800 dark:text-zinc-200 shadow-sm p-5 border-blue-500'
+                          : `bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 shadow-sm p-5 ${getBorderColorClass(accentColor)}`
                       }`}>
-                        {m.content}
+                        <Markdown content={m.content} variant={m.role === 'user' ? 'user' : 'assistant'} />
                       </div>
                       {!isLoading && (
                         <div className={`absolute top-0 flex gap-1 p-1 opacity-0 group-hover/content:opacity-100 transition-opacity ${
@@ -151,6 +193,15 @@ export default function DebateView({ messages, streamingMessage, onSendMessage, 
                           >
                             <Edit2 className="w-3.5 h-3.5" />
                           </button>
+                          {onForkMessage && (
+                            <button 
+                              onClick={() => onForkMessage(m.id)}
+                              title="Fork session from here"
+                              className="p-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-400 hover:text-blue-500 shadow-sm"
+                            >
+                              <GitFork className="w-3.5 h-3.5" />
+                            </button>
+                          )}
                           <button 
                             onClick={() => onDeleteMessage(m.id)}
                             className="p-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-400 hover:text-rose-500 shadow-sm"
@@ -184,7 +235,7 @@ export default function DebateView({ messages, streamingMessage, onSendMessage, 
                 </span>
               </div>
               <div className="p-4 rounded-2xl text-sm leading-relaxed bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 shadow-sm">
-                {streamingMessage.content}
+                <Markdown content={streamingMessage.content} />
                 <span className="inline-block w-1 h-4 ml-1 bg-emerald-500 animate-pulse align-middle" />
               </div>
             </div>
