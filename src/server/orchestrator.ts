@@ -142,6 +142,14 @@ export async function* runRoundTable(
     content: m.content
   }));
 
+  // Inject refined prompt if it exists
+  if (session?.refinedPrompt) {
+    baseMessages.push({
+      role: 'system',
+      content: `[REFINED CONTEXT]: ${session.refinedPrompt}`
+    });
+  }
+
   // Automatic Summarization Trigger
   const MAX_MESSAGES = 10;
   if (rawMessages.length > MAX_MESSAGES) {

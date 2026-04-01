@@ -13,6 +13,7 @@ import { stream } from 'hono/streaming'
 import { runRoundTable, getProviderAdapter, applyChattinessConstraint } from './orchestrator'
 import { seedThinkingHats } from './db/seeds/personas'
 import { syncRoles } from './services/role-sync'
+import { RefinementService } from './services/refinement-service'
 
 const app = new Hono()
 
@@ -98,6 +99,13 @@ app.get('/sessions', async (c) => {
   return c.json(result)
 })
 
+app.get('/sessions/:id', async (c) => {
+  const id = c.req.param('id')
+  const [result] = await db.select().from(sessions).where(eq(sessions.id, id))
+  if (!result) return c.json({ error: 'Session not found' }, 404)
+  return c.json(result)
+})
+
 app.post('/sessions', async (c) => {
   const { title } = await c.req.json()
   const id = uuidv4()
@@ -105,10 +113,38 @@ app.post('/sessions', async (c) => {
   await db.insert(sessions).values({
     id,
     title: title || 'New Session',
+    status: 'refining',
     createdAt: now,
     updatedAt: now
   })
-  return c.json({ id, title })
+  return c.json({ id, title, status: 'refining' })
+})
+
+app.get('/sessions/:id/refine', async (c) => {
+  const id = c.req.param('id')
+  
+  c.header('Content-Type', 'text/event-stream')
+  c.header('Cache-Control', 'no-cache')
+  c.header('Connection', 'keep-alive')
+
+  return stream(c, async (stream) => {
+    for await (const chunk of RefinementService.runRefinement(id)) {
+      await stream.write(`data: ${JSON.stringify(chunk)}\n\n`)
+    }
+  })
+})
+
+app.post('/sessions/:id/refine/confirm', async (c) => {
+  const id = c.req.param('id')
+  const { refinedPrompt } = await c.req.json()
+  const result = await RefinementService.confirmRefinement(id, refinedPrompt)
+  return c.json(result)
+})
+
+app.post('/sessions/:id/refine/skip', async (c) => {
+  const id = c.req.param('id')
+  const result = await RefinementService.skipRefinement(id)
+  return c.json(result)
 })
 
 app.put('/sessions/:id', async (c) => {

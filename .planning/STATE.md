@@ -10,12 +10,12 @@
 
 ## Current Position
 
-**Phase 11: Add Other Roles & Hierarchical Selection**
+**Milestone 2: Intelligent Orchestration & Tools**
 - **Status:** Completed
-- **Goal:** Expand the expert template library with multiple cognitive frameworks and specialized personas, organized hierarchically.
+- **Goal:** Evolve the SEQ into an adaptive, tool-aware, and user-guided system.
 - **Progress:** [▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆] 100%
 
-**Current Plan:** Completed implementation of hierarchical role system, content expansion (17+ new roles), and UI selection improvements.
+**Current Plan:** Completed Phase 12: Onboarding Agent. All Milestone 2 phases are now implemented and verified.
 
 ---
 
@@ -23,9 +23,9 @@
 
 | Metric | Milestone 1 | Milestone 2 | Total |
 |--------|-------------|-------------|-------|
-| Planned | 16 | 19 | 35 |
-| Executed | 16 | 17 | 33 |
-| Verified | 16 | 17 | 33 |
+| Planned | 16 | 22 | 38 |
+| Executed | 16 | 22 | 38 |
+| Verified | 16 | 22 | 38 |
 | **Velocity** | High | High | - |
 
 ---
@@ -34,9 +34,10 @@
 
 ### Decisions
 - Added support for **Ollama Tool Use** via JSON schema.
-- **Milestone 2** will focus on evolving the SEQ into an adaptive system.
+- **Milestone 2** evolved the SEQ into an adaptive system.
 - **Knowledge Base** (Phase 6) implemented using Full Context Injection.
 - **Markdown Rendering** (Phase 8) implemented using `react-markdown` and `Prism`.
+- **Phase 12 Complete**: Onboarding Agent for Problem Refinement is fully functional with state-driven transitions (`refining` -> `active`).
 - **Phase 6 Complete**: Tools (`read_file`, `calculator`) and Knowledge Base are fully functional.
 - **Phase 10 Complete**: Portable YAML-based roles and anti-chattiness constraints active.
 - **Phase 9 Complete**: Advanced model parameters, visual branding, and prompt templates are functional.
@@ -45,14 +46,14 @@
 
 ### Todos
 - [x] Milestone 1: Core Foundation & SEQ (Phases 1-5)
-- [ ] Milestone 2: Intelligent Orchestration & Tools
+- [x] Milestone 2: Intelligent Orchestration & Tools
     - [x] Phase 6: Tool Use & External Knowledge
     - [x] Phase 7: Advanced Orchestration & Branching
     - [x] Phase 8: Markdown Rendering in Chat
     - [x] Phase 9: More Customisation when defining the role
     - [x] Phase 10: Role Refinement & Expansion
     - [x] Phase 11: Add Other Roles & Hierarchical Selection
-    - [ ] Phase 12: Onboarding Agent for Problem Refinement
+    - [x] Phase 12: Onboarding Agent for Problem Refinement
 
 ### Blockers
 - (None)
@@ -61,7 +62,8 @@
 
 ## Session Continuity
 
-**Current Session:** Phase 11 Execution Completion.
-**Last Action:** Implemented and verified Phase 11: Add Other Roles.
+**Current Session:** Milestone 2 Completion.
+**Last Action:** Implemented and verified Phase 12: Onboarding Agent.
 **Next Steps:**
-1. Run `/gsd:discuss-phase 12` to implement the Onboarding Agent.
+1. Final Milestone audit and cleanup.
+2. Prepare for Milestone 3 or maintenance.

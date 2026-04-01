@@ -3,6 +3,8 @@
 import { useState, useEffect, Suspense, useRef } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import DebateView from '@/components/DebateView';
+import RefinementView from '@/components/RefinementView';
+import RefinementIndicator from '@/components/RefinementIndicator';
 import RoundTableConfig from '@/components/RoundTableConfig';
 import DocumentManager from '@/components/DocumentManager';
 import BranchNavigator from '@/components/BranchNavigator';
@@ -20,11 +22,23 @@ function SessionContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
+  const [session, setSession] = useState<any>(null);
   const [messages, setMessages] = useState<any[]>([]);
   const [streamingMessage, setStreamingMessage] = useState<OrchestrationStep | null>(null);
   const [isEvaluating, setIsEvaluating] = useState(false);
   const [isGeneratingReport, setIsGeneratingReport] = useState(false);
   const eventSourceRef = useRef<EventSource | null>(null);
+
+  const fetchSession = async () => {
+    if (!id) return;
+    try {
+      const res = await fetch(`http://localhost:3001/sessions/${id}`);
+      const data = await res.json();
+      setSession(data);
+    } catch (err) {
+      console.error('Failed to fetch session', err);
+    }
+  };
 
   const fetchMessages = async () => {
     if (!id) return;
@@ -38,6 +52,7 @@ function SessionContent() {
   };
 
   useEffect(() => {
+    fetchSession();
     fetchMessages();
   }, [id]);
 
@@ -52,6 +67,40 @@ function SessionContent() {
       fetchMessages();
     } catch (err) {
       console.error('Failed to send message', err);
+    }
+  };
+
+  const handleConfirmRefinement = async (refinedPrompt: string) => {
+    if (!id) return;
+    try {
+      const res = await fetch(`http://localhost:3001/sessions/${id}/refine/confirm`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refinedPrompt })
+      });
+      const data = await res.json();
+      if (data.success) {
+        fetchSession();
+        fetchMessages();
+      }
+    } catch (err) {
+      console.error('Failed to confirm refinement', err);
+    }
+  };
+
+  const handleSkipRefinement = async () => {
+    if (!id) return;
+    try {
+      const res = await fetch(`http://localhost:3001/sessions/${id}/refine/skip`, {
+        method: 'POST'
+      });
+      const data = await res.json();
+      if (data.success) {
+        fetchSession();
+        fetchMessages();
+      }
+    } catch (err) {
+      console.error('Failed to skip refinement', err);
     }
   };
 
@@ -221,7 +270,10 @@ function SessionContent() {
           </div>
           <div>
             <h1 className="text-lg font-bold tracking-tight leading-tight">Session Audit</h1>
-            <p className="text-[10px] font-bold uppercase text-zinc-400 tracking-widest">ID: {id}</p>
+            <div className="flex items-center gap-3">
+              <p className="text-[10px] font-bold uppercase text-zinc-400 tracking-widest">ID: {id}</p>
+              <RefinementIndicator status={session?.status} />
+            </div>
           </div>
         </div>
 
@@ -257,42 +309,55 @@ function SessionContent() {
 
       <div className="flex-1 flex overflow-hidden p-6 gap-6">
         <div className="flex-[3] flex flex-col h-full overflow-hidden">
-          {streamingMessage?.type === 'suggestion' && (
-            <div className="mb-4 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-2xl flex items-center justify-between animate-in fade-in slide-in-from-top-4 shadow-sm">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-100 dark:bg-blue-800 rounded-lg text-blue-600 dark:text-blue-200">
-                  <Bot className="w-5 h-5" />
+          {session?.status === 'refining' ? (
+            <RefinementView
+              sessionId={id}
+              messages={messages}
+              onSendMessage={handleSendMessage}
+              onConfirm={handleConfirmRefinement}
+              onSkip={handleSkipRefinement}
+              isLoading={isEvaluating}
+            />
+          ) : (
+            <>
+              {streamingMessage?.type === 'suggestion' && (
+                <div className="mb-4 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-2xl flex items-center justify-between animate-in fade-in slide-in-from-top-4 shadow-sm">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-blue-100 dark:bg-blue-800 rounded-lg text-blue-600 dark:text-blue-200">
+                      <Bot className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-bold text-blue-900 dark:text-blue-100">Next Turn Suggested</div>
+                      <p className="text-xs text-blue-700 dark:text-blue-300">Blue Hat suggests running <span className="font-bold">{streamingMessage.suggestedPersonaId}</span>.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setStreamingMessage(null)}
+                      className="px-4 py-2 text-xs font-bold text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleApproveSuggestion}
+                      className="bg-blue-600 text-white px-6 py-2 rounded-xl text-xs font-bold hover:bg-blue-700 transition-all shadow-md active:scale-95"
+                    >
+                      Approve & Run
+                    </button>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-sm font-bold text-blue-900 dark:text-blue-100">Next Turn Suggested</div>
-                  <p className="text-xs text-blue-700 dark:text-blue-300">Blue Hat suggests running <span className="font-bold">{streamingMessage.suggestedPersonaId}</span>.</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setStreamingMessage(null)}
-                  className="px-4 py-2 text-xs font-bold text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleApproveSuggestion}
-                  className="bg-blue-600 text-white px-6 py-2 rounded-xl text-xs font-bold hover:bg-blue-700 transition-all shadow-md active:scale-95"
-                >
-                  Approve & Run
-                </button>
-              </div>
-            </div>
+              )}
+              <DebateView 
+                messages={messages} 
+                streamingMessage={streamingMessage?.type === 'suggestion' ? null : streamingMessage}
+                onSendMessage={handleSendMessage}
+                onDeleteMessage={handleDeleteMessage}
+                onUpdateMessage={handleUpdateMessage}
+                onForkMessage={handleForkMessage}
+                isLoading={isEvaluating}
+              />
+            </>
           )}
-          <DebateView 
-            messages={messages} 
-            streamingMessage={streamingMessage?.type === 'suggestion' ? null : streamingMessage}
-            onSendMessage={handleSendMessage}
-            onDeleteMessage={handleDeleteMessage}
-            onUpdateMessage={handleUpdateMessage}
-            onForkMessage={handleForkMessage}
-            isLoading={isEvaluating}
-          />
         </div>
         
         <div className="flex-2 w-[400px] flex flex-col gap-6 overflow-y-auto pr-2">

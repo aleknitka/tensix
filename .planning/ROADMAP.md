@@ -14,7 +14,7 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 - [x] **Phase 8: Markdown Rendering in Chat** - Proper display of formatted text, lists, and tables in the UI.
 - [x] **Phase 9: More Customisation when defining the role** - Enhanced persona definition options.
 - [x] **Phase 10: Role Refinement & Expansion** - Design specialized roles and tailor existing ones for better roleplay.
-- [ ] **Phase 11: Add Other Roles** - Expand template library beyond Six Thinking Hats.
+- [x] **Phase 11: Add Other Roles** - Expand template library beyond Six Thinking Hats.
 - [ ] **Phase 12: Onboarding Agent for Problem Refinement** - Guided initial problem definition for users.
 
 ## Phase Details
@@ -166,17 +166,25 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 **Depends on**: Phase 10
 **Requirements**: ROLE-SCAN, ROLE-SCHEMA, ROLE-CONTENT, ROLE-UI
 **Plans**: 4 plans
-- [ ] 11-01-PLAN.md — Schema and Sync Service
-- [ ] 11-02-PLAN.md — Role Library Expansion: SCAMPER
-- [ ] 11-04-PLAN.md — Role Library Expansion: Domain Experts
-- [ ] 11-03-PLAN.md — Hierarchical UI
+- [x] 11-01-PLAN.md — Schema and Sync Service
+- [x] 11-02-PLAN.md — Role Library Expansion: SCAMPER
+- [x] 11-03-PLAN.md — Hierarchical UI
+- [x] 11-04-PLAN.md — Role Library Expansion: Domain Experts
 **UI hint**: yes
 
 ### Phase 12: Onboarding Agent for Problem Refinement
-**Goal**: Implement an agent that interacts with the user to clarify and refine their initial prompt before the round-table begins.
+**Goal**: Implement a guided refinement process (Socratic dialogue) before starting the round-table session.
 **Depends on**: Phase 3
-**Requirements**: TBD
-**Plans**: 0 plans
+**Requirements**: REQ-12.1, REQ-12.2, REQ-12.3, REQ-12.4, REQ-12.5, REQ-12.6
+**Success Criteria**:
+  1. User can engage in a Socratic dialogue with a "Refiner" persona.
+  2. The session transitions through explicit `refining` and `active` states.
+  3. The confirmed `refinedPrompt` is used as the context for the round-table evaluation.
+**Plans**: 3 plans
+- [x] 12-01-PLAN.md — Foundation & Persistence (Wave 1)
+- [x] 12-02-PLAN.md — Orchestration & Logic (Wave 2)
+- [x] 12-03-PLAN.md — UI Integration & Verification (Wave 3)
+**UI hint**: yes
 
 ## Progress Table
 
@@ -192,8 +200,8 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 | 8. Markdown Rendering in Chat | 3/3 | Completed | 2026-03-30 |
 | 9. More Customisation role | 3/3 | Completed | 2026-03-30 |
 | 10. Role Refinement & Expansion | 3/3 | Completed | 2026-03-30 |
-| 11. Add Other Roles | 0/4 | In Progress | - |
-| 12. Onboarding Agent | 0/0 | Not Started | - |
+| 11. Add Other Roles | 4/4 | Completed | 2026-04-01 |
+| 12. Onboarding Agent | 3/3 | Completed | 2026-04-01 |
 
 ## Backlog
 

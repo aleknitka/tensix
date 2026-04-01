@@ -15,6 +15,8 @@ export const sessions = sqliteTable('sessions', {
   id: text('id').primaryKey(),
   title: text('title').notNull(),
   summary: text('summary'),
+  status: text('status').notNull().default('active'), // "refining" | "active" | "completed"
+  refinedPrompt: text('refined_prompt'),
   parentId: text('parent_id').references((): any => sessions.id),
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
   updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull(),

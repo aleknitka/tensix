@@ -15,6 +15,13 @@
       "when": 1774995641441,
       "tag": "0001_stormy_risque",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1775076591398,
+      "tag": "0002_green_zaran",
+      "breakpoints": true
     }
   ]
 }
