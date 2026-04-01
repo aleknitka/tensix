@@ -9,11 +9,11 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 - [x] **Phase 3: Core Orchestration (The Round Table)** - Implement the Serial Expert Queue (SEQ) for sequential multi-persona reasoning.
 - [x] **Phase 4: Persona Management & Moderation** - Add interactive human-in-the-loop controls and custom persona creation.
 - [x] **Phase 5: Context & Reporting** - Finalize reporting features and handle long-running session context via summarization.
-- [ ] **Phase 6: Tool Use & External Knowledge** - Implement function calling for personas and a RAG-lite knowledge base.
+- [x] **Phase 6: Tool Use & External Knowledge** - Implement function calling for personas and a RAG-lite knowledge base.
 - [ ] **Phase 7: Advanced Orchestration & Branching** - Add dynamic turn suggestion, consensus modes, and session forking.
-- [ ] **Phase 8: Markdown Rendering in Chat** - Proper display of formatted text, lists, and tables in the UI.
-- [ ] **Phase 9: More Customisation when defining the role** - Enhanced persona definition options.
-- [ ] **Phase 10: Role Refinement & Expansion** - Design specialized roles and tailor existing ones for better roleplay.
+- [x] **Phase 8: Markdown Rendering in Chat** - Proper display of formatted text, lists, and tables in the UI.
+- [x] **Phase 9: More Customisation when defining the role** - Enhanced persona definition options.
+- [x] **Phase 10: Role Refinement & Expansion** - Design specialized roles and tailor existing ones for better roleplay.
 - [ ] **Phase 11: Add Other Roles** - Expand template library beyond Six Thinking Hats.
 - [ ] **Phase 12: Onboarding Agent for Problem Refinement** - Guided initial problem definition for users.
 
@@ -105,11 +105,17 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 ### Phase 7: Advanced Orchestration & Branching
 **Goal**: Transition from static turn-taking to intelligent, adaptive round-tables.
 **Depends on**: Phase 6
-**Requirements**: ORCH-05, ORCH-06, ORCH-07, UI-06
+**Requirements**: ORCH-05, ORCH-06, ORCH-07, UI-06, RND-07, RND-08, RND-10
 **Success Criteria**:
   1. The "Blue Hat" can suggest the next speaker based on current gaps in the discussion.
-  2. A "Consensus" round successfully terminates when agreement is reached.
+  2. Consensus mode terminates automatically when agreement is reached or turn limit hit.
   3. User can fork a session from a past message and continue it independently.
+  4. Visual tree allows clear navigation between multiple conversation paths.
+**Plans**:
+- [ ] 07-01-PLAN.md — Database & Backend Foundation (Wave 1)
+- [ ] 07-02-PLAN.md — Orchestrator Logic Upgrade (Wave 2)
+- [ ] 07-03-PLAN.md — UI Integration (Wave 3)
+**UI hint**: yes
 
 ### Phase 8: Markdown Rendering in Chat
 **Goal**: Implement markdown support for messages in the chat UI (e.g., using react-markdown) to properly display formatted text, lists, and tables.
@@ -135,9 +141,9 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
   3. The editor includes a working sandbox for immediate persona feedback.
   4. Reasoning templates can be easily inserted into system prompts.
 **Plans**:
-- [ ] 09-01-PLAN.md — Database & Backend Updates (Wave 1)
-- [ ] 09-02-PLAN.md — UI Enhancements Part 1: Parameters & Visuals (Wave 2)
-- [ ] 09-03-PLAN.md — UI Enhancements Part 2: Sandbox & Templates (Wave 3)
+- [x] 09-01-PLAN.md — Database & Backend Updates (Wave 1)
+- [x] 09-02-PLAN.md — UI Enhancements Part 1: Parameters & Visuals (Wave 2)
+- [x] 09-03-PLAN.md — UI Enhancements Part 2: Sandbox & Templates (Wave 3)
 **UI hint**: yes
 
 ### Phase 10: Role Refinement & Expansion
@@ -150,9 +156,9 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
   3. LLM responses are noticeably shorter (few sentences) for standard roles.
   4. YAML export/import of a role profile works correctly.
 **Plans**:
-- [ ] 10-01-PLAN.md — Foundation & Schema (Wave 1)
-- [ ] 10-02-PLAN.md — Sync & Orchestration (Wave 2)
-- [ ] 10-03-PLAN.md — UI & Library Management (Wave 3)
+- [x] 10-01-PLAN.md — Foundation & Schema (Wave 1)
+- [x] 10-02-PLAN.md — Sync & Orchestration (Wave 2)
+- [x] 10-03-PLAN.md — UI & Library Management (Wave 3)
 **UI hint**: yes
 
 ### Phase 11: Add Other Roles
@@ -179,8 +185,8 @@ This roadmap outlines the development of Tensix, a local-first multi-LLM round-t
 | 6. Tool Use & External Knowledge | 3/3 | Completed | 2026-03-30 |
 | 7. Advanced Orchestration & Branching | 0/3 | Not Started | - |
 | 8. Markdown Rendering in Chat | 3/3 | Completed | 2026-03-30 |
-| 9. More Customisation role | 0/3 | Not Started | - |
-| 10. Role Refinement & Expansion | 3/3 | In Progress | - |
+| 9. More Customisation role | 3/3 | Completed | 2026-03-30 |
+| 10. Role Refinement & Expansion | 3/3 | Completed | 2026-03-30 |
 | 11. Add Other Roles | 0/0 | Not Started | - |
 | 12. Onboarding Agent | 0/0 | Not Started | - |
 
