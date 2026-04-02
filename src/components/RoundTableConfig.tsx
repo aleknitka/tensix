@@ -101,14 +101,14 @@ export default function RoundTableConfig({ sessionId, onStartEvaluation, onStopE
     <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 space-y-6 shadow-sm">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold flex items-center gap-2">
-          <BrainCircuit className="w-6 h-6 text-zinc-400" />
+          <BrainCircuit className="w-6 h-6 text-zinc-600" />
           Round Table
         </h2>
         <div className="flex items-center gap-3">
           {!isEvaluating && (
             <button
               onClick={() => setIsLibraryOpen(true)}
-              className="flex items-center gap-2 text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 font-bold text-sm transition-colors"
+              className="flex items-center gap-2 text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-100 font-bold text-sm transition-colors"
             >
               <Library className="w-4 h-4" />
               Role Library
@@ -141,7 +141,7 @@ export default function RoundTableConfig({ sessionId, onStartEvaluation, onStopE
             <div className="p-6 border-b border-zinc-100 dark:border-zinc-900 flex items-center justify-between bg-zinc-50/50 dark:bg-zinc-900/50">
               <div>
                 <h3 className="text-lg font-bold">Select from Library</h3>
-                <p className="text-xs text-zinc-500 mt-0.5 font-medium">Add specialized roles to the discussion</p>
+                <p className="text-xs text-zinc-600 mt-0.5 font-medium">Add specialized roles to the discussion</p>
               </div>
               <button onClick={() => setIsLibraryOpen(false)} className="p-2 hover:bg-zinc-200 dark:hover:bg-zinc-800 rounded-xl transition-colors">
                 <X className="w-5 h-5" />
@@ -161,7 +161,7 @@ export default function RoundTableConfig({ sessionId, onStartEvaluation, onStopE
               <UserPlus className="w-5 h-5 text-blue-500" />
               Assign Model
             </h3>
-            <p className="text-sm text-zinc-500 leading-relaxed font-medium">
+            <p className="text-sm text-zinc-600 leading-relaxed font-medium">
               Choose an LLM model to power <span className="text-zinc-900 dark:text-zinc-100 font-bold">{assigningModelPersona.name}</span> for this and future sessions.
             </p>
             <div className="space-y-4 py-2">
@@ -180,7 +180,7 @@ export default function RoundTableConfig({ sessionId, onStartEvaluation, onStopE
             <div className="flex justify-end gap-3 pt-2">
               <button 
                 onClick={() => setAssigningModelPersona(null)}
-                className="px-4 py-2 text-sm font-bold text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+                className="px-4 py-2 text-sm font-bold text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
               >
                 Cancel
               </button>
@@ -199,11 +199,11 @@ export default function RoundTableConfig({ sessionId, onStartEvaluation, onStopE
 
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-bold uppercase text-zinc-500 tracking-wider">Select Participants</h3>
+          <h3 className="text-sm font-bold uppercase text-zinc-600 tracking-wider">Select Participants</h3>
           {!isEvaluating && (
             <button 
               onClick={() => setSelectedPersonaIds(personas.map(p => p.id))}
-              className="text-xs font-semibold text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+              className="text-xs font-semibold text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
             >
               Select All
             </button>
@@ -212,8 +212,8 @@ export default function RoundTableConfig({ sessionId, onStartEvaluation, onStopE
         <div className="grid grid-cols-1 gap-2">
           {personas.length === 0 && (
             <div className="py-12 text-center bg-zinc-50 dark:bg-zinc-900/50 rounded-xl border border-dashed border-zinc-200 dark:border-zinc-800">
-              <p className="text-zinc-500 text-sm font-medium">No roles added yet.</p>
-              <p className="text-zinc-400 text-xs mt-1">Use "Role Library" to add specialized experts.</p>
+              <p className="text-zinc-600 text-sm font-medium">No roles added yet.</p>
+              <p className="text-zinc-600 text-xs mt-1">Use "Role Library" to add specialized experts.</p>
             </div>
           )}
           {personas.map(p => (
@@ -243,10 +243,10 @@ export default function RoundTableConfig({ sessionId, onStartEvaluation, onStopE
                       </span>
                     )}
                   </div>
-                  <div className="text-[10px] text-zinc-500 font-medium uppercase tracking-wide truncate">{p.role}</div>
+                  <div className="text-[10px] text-zinc-600 font-medium uppercase tracking-wide truncate">{p.role}</div>
                 </div>
                 {p.modelId && (
-                   <div className="text-[9px] font-mono text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded self-center">
+                   <div className="text-[9px] font-mono text-zinc-600 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded self-center">
                     {p.modelId}
                   </div>
                 )}
@@ -256,7 +256,7 @@ export default function RoundTableConfig({ sessionId, onStartEvaluation, onStopE
                   onClick={() => onStartEvaluation([p.id], 'sequential', 1)}
                   disabled={!p.modelId}
                   title={p.modelId ? "Force this expert to speak now" : "Assign a model first"}
-                  className="p-3 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 disabled:opacity-30"
+                  className="p-3 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-100 disabled:opacity-30"
                 >
                   <SkipForward className="w-4 h-4" />
                 </button>

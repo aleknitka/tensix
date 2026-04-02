@@ -231,6 +231,12 @@ app.post('/sessions/:id/fork', async (c) => {
 })
 
 // System routes
+app.post('/system/clear-chats', async (c) => {
+  await db.delete(messages)
+  await db.delete(sessions)
+  return c.json({ success: true })
+})
+
 app.post('/system/reset', async (c) => {
   await db.delete(messages)
   await db.delete(sessions)
@@ -507,7 +513,7 @@ app.get('/sessions/:id/evaluate', async (c) => {
   })
 })
 
-const port = 3001
+const port = parseInt(process.env.PORT || '3001')
 console.log(`Server is running on http://localhost:${port}`)
 
 serve({

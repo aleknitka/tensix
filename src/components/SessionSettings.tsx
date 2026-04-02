@@ -28,14 +28,14 @@ export default function SessionSettings({
   return (
     <div className="space-y-6">
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 shadow-sm space-y-6">
-        <h3 className="text-xs font-extrabold uppercase text-zinc-400 flex items-center gap-2 tracking-wider">
+        <h3 className="text-xs font-extrabold uppercase text-zinc-600 flex items-center gap-2 tracking-wider">
           <Settings className="w-3.5 h-3.5" />
           Orchestration Configuration
         </h3>
         
         <div className="space-y-4">
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-400">Orchestration Mode</label>
+            <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-600">Orchestration Mode</label>
             <div className="grid grid-cols-3 gap-2">
               {(['sequential', 'auto', 'hitl'] as const).map((m) => (
                 <button
@@ -44,14 +44,14 @@ export default function SessionSettings({
                   className={`px-2 py-2 rounded-lg text-[10px] font-bold uppercase border transition-all ${
                     mode === m 
                       ? 'bg-zinc-900 text-white border-zinc-900 dark:bg-zinc-100 dark:text-zinc-900 dark:border-zinc-100' 
-                      : 'bg-zinc-50 dark:bg-zinc-800 text-zinc-500 border-zinc-200 dark:border-zinc-700 hover:border-zinc-400'
+                      : 'bg-zinc-50 dark:bg-zinc-800 text-zinc-600 border-zinc-200 dark:border-zinc-700 hover:border-zinc-400'
                   }`}
                 >
                   {m}
                 </button>
               ))}
             </div>
-            <p className="text-[10px] text-zinc-500 font-medium">
+            <p className="text-[10px] text-zinc-600 font-medium">
               {mode === 'sequential' && 'Evaluates experts one after another to save VRAM.'}
               {mode === 'auto' && 'Blue Hat automatically chooses the next speaker.'}
               {mode === 'hitl' && 'Human-in-the-loop: approve next speakers manually.'}
@@ -59,7 +59,7 @@ export default function SessionSettings({
           </div>
 
           <div className="space-y-2 pt-2">
-            <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-400 flex justify-between">
+            <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-600 flex justify-between">
               Max Turns per Session <span>{maxTurns}</span>
             </label>
             <input
@@ -76,7 +76,7 @@ export default function SessionSettings({
       </div>
 
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 shadow-sm space-y-6">
-        <h3 className="text-xs font-extrabold uppercase text-zinc-400 flex items-center gap-2 tracking-wider">
+        <h3 className="text-xs font-extrabold uppercase text-zinc-600 flex items-center gap-2 tracking-wider">
           <Download className="w-3.5 h-3.5" />
           Export & Reporting
         </h3>

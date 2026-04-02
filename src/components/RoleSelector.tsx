@@ -103,15 +103,15 @@ export default function RoleSelector({ onSelect, excludeIds = DEFAULT_EXCLUDE }:
       case 'purple': return 'text-purple-500 bg-purple-500/10 border-purple-500/20';
       case 'pink': return 'text-pink-500 bg-pink-500/10 border-pink-500/20';
       case 'cyan': return 'text-cyan-500 bg-cyan-500/10 border-cyan-500/20';
-      case 'slate': return 'text-zinc-500 bg-zinc-500/10 border-zinc-500/20';
-      default: return 'text-zinc-500 bg-white dark:bg-zinc-800 border-zinc-100 dark:border-zinc-700';
+      case 'slate': return 'text-zinc-600 bg-zinc-500/10 border-zinc-500/20';
+      default: return 'text-zinc-600 bg-white dark:bg-zinc-800 border-zinc-100 dark:border-zinc-700';
     }
   };
 
   return (
     <div className="space-y-4">
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-600" />
         <input
           type="text"
           placeholder="Search roles (e.g. 'auditor', 'black hat')..."
@@ -123,7 +123,7 @@ export default function RoleSelector({ onSelect, excludeIds = DEFAULT_EXCLUDE }:
 
       <div className="max-h-[400px] overflow-y-auto space-y-4 pr-2 custom-scrollbar">
         {loading ? (
-          <div className="py-8 text-center text-zinc-500 text-sm italic">Loading roles...</div>
+          <div className="py-8 text-center text-zinc-600 text-sm italic">Loading roles...</div>
         ) : Object.keys(groupedPersonas).length > 0 ? (
           Object.entries(groupedPersonas).map(([category, roles]) => (
             <div key={category} className="space-y-2">
@@ -132,15 +132,15 @@ export default function RoleSelector({ onSelect, excludeIds = DEFAULT_EXCLUDE }:
                 className="flex items-center gap-2 w-full text-left px-2 py-1 group"
               >
                 {collapsedCategories[category] ? (
-                  <ChevronRight className="w-4 h-4 text-zinc-400 group-hover:text-zinc-600 transition-colors" />
+                  <ChevronRight className="w-4 h-4 text-zinc-600 group-hover:text-zinc-600 transition-colors" />
                 ) : (
-                  <ChevronDown className="w-4 h-4 text-zinc-400 group-hover:text-zinc-600 transition-colors" />
+                  <ChevronDown className="w-4 h-4 text-zinc-600 group-hover:text-zinc-600 transition-colors" />
                 )}
-                <span className="text-xs font-bold uppercase tracking-wider text-zinc-500 group-hover:text-zinc-700 transition-colors">
+                <span className="text-xs font-bold uppercase tracking-wider text-zinc-600 group-hover:text-zinc-700 transition-colors">
                   {category}
                 </span>
                 <div className="flex-1 h-px bg-zinc-100 dark:bg-zinc-800" />
-                <span className="text-[10px] font-medium text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded-full">
+                <span className="text-[10px] font-medium text-zinc-600 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded-full">
                   {roles.length}
                 </span>
               </button>
@@ -163,12 +163,12 @@ export default function RoleSelector({ onSelect, excludeIds = DEFAULT_EXCLUDE }:
                               {persona.name}
                             </span>
                             {persona.role_type && (
-                              <span className="px-1.5 py-0.5 rounded-md bg-zinc-200 dark:bg-zinc-800 text-[10px] font-bold uppercase tracking-wider text-zinc-500">
+                              <span className="px-1.5 py-0.5 rounded-md bg-zinc-200 dark:bg-zinc-800 text-[10px] font-bold uppercase tracking-wider text-zinc-600">
                                 {persona.role_type}
                               </span>
                             )}
                           </div>
-                          <p className="text-xs text-zinc-500 dark:text-zinc-400 font-medium leading-relaxed line-clamp-2">
+                          <p className="text-xs text-zinc-600 dark:text-zinc-600 font-medium leading-relaxed line-clamp-2">
                             {persona.description || persona.role}
                           </p>
                         </div>
@@ -182,8 +182,8 @@ export default function RoleSelector({ onSelect, excludeIds = DEFAULT_EXCLUDE }:
         ) : (
           <div className="py-12 text-center bg-zinc-50 dark:bg-zinc-900/50 rounded-xl border border-dashed border-zinc-200 dark:border-zinc-800">
             <Info className="w-8 h-8 text-zinc-300 dark:text-zinc-700 mx-auto mb-3" />
-            <p className="text-zinc-500 text-sm font-medium">No matching roles found.</p>
-            <p className="text-zinc-400 text-xs mt-1">Try a different search term.</p>
+            <p className="text-zinc-600 text-sm font-medium">No matching roles found.</p>
+            <p className="text-zinc-600 text-xs mt-1">Try a different search term.</p>
           </div>
         )}
       </div>

@@ -1,63 +1,56 @@
 # Roadmap: Tensix
 
-This roadmap outlines the development of Tensix, a local-first multi-LLM round-table evaluation tool. It follows a goal-backward structure derived from v1 requirements and research findings, focusing on resource-efficient orchestration (Serial Expert Queue) and structured reasoning (Six Thinking Hats).
+This roadmap outlines the development of Tensix, a local-first multi-LLM round-table evaluation tool.
 
 ## Milestones
 
 - [x] **v1.0 MVP** - Established foundation, connectivity, core orchestration, tools, roles, and onboarding.
+- [ ] **UI Refinements & Docker** - Polishing the interface, improving safety, and enabling containerized deployment.
 
 ## Phases
 
-(No active phases. Plan next milestone to add phases.)
+### Phase 13: Data Safety & Bulk Deletion Refactoring
+**Goal**: Split system reset into "Clear Chats" and "Full Reset", and protect critical data from bulk deletion.
+**Status**: Pending
+
+### Phase 14: Layout Expansion & Contrast Audit
+**Goal**: Increase chat window real estate and improve text legibility across the app.
+**Status**: Pending
+
+### Phase 15: Workflow Protection (Refiner Locking)
+**Goal**: Ensure AI-generated refinements are preserved as intended by making them read-only.
+**Status**: Pending
+
+### Phase 16: Dockerization & Deployment Strategy
+**Goal**: Provide Docker support for easier deployment and containerized execution of the backend and frontend.
+**Status**: Pending
 
 ## Phase Details
 
-(No active phases.)
+### Phase 13: Data Safety & Bulk Deletion Refactoring
+- **T-UI-01**: Implement `/system/clear-chats` endpoint.
+- **T-UI-02**: Update Settings UI to distinguish between clearing history and resetting the system.
+- **T-UI-03**: Ensure personas/providers cannot be deleted in bulk.
 
-### Phase 999.2: Separate Tab for Team Building
-**Goal**: Move team building functionality to a separate tab to improve session chat history readability.
-**Depends on**: Phase 3, Phase 4
-**Requirements**: 999.2-TAB-01, 999.2-TAB-02, 999.2-TAB-03, 999.2-TAB-04
-**Success Criteria**:
-  1. Right sidebar features a tabbed navigation (Team, Docs, Branches, Settings, Tools).
-  2. Chat history horizontal space is preserved or improved by logical grouping.
-  3. Session settings (export, orchestration) are consolidated in a dedicated tab.
-**Plans**: 2 plans
-- [x] 999.2-01-PLAN.md — Tabbed Sidebar Foundation (Wave 1)
-- [x] 999.2-02-PLAN.md — Content Migration & Refactoring (Wave 2)
-**UI hint**: yes
+### Phase 14: Layout Expansion & Contrast Audit
+- **T-UI-04**: Refactor `DebateView.tsx` for expanded width.
+- **T-UI-05**: Global color audit and adjustment for contrast.
+
+### Phase 15: Workflow Protection (Refiner Locking)
+- **T-UI-06**: Modify `RefinementView.tsx` to remove editing capabilities for the refined prompt.
+
+### Phase 16: Dockerization & Deployment Strategy
+- **T-OPS-01**: Multi-stage Dockerfile for Next.js.
+- **T-OPS-02**: Dockerfile for Backend.
+- **T-OPS-03**: docker-compose.yml configuration.
+- **T-OPS-04**: Environment variable ingestion logic.
 
 ## Progress Table
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Project Foundation | 3/3 | Completed | 2024-05-24 |
-| 2. Connectivity & Discovery | 2/2 | Completed | 2024-05-24 |
-| 3. Core Orchestration | 3/3 | Completed | 2024-05-24 |
-| 4. Persona Management & Moderation | 3/3 | Completed | 2024-05-25 |
-| 5. Context & Reporting | 3/3 | Completed | 2026-03-30 |
-| 6. Tool Use & External Knowledge | 3/3 | Completed | 2026-03-30 |
-| 7. Advanced Orchestration & Branching | 3/3 | Completed | 2026-03-30 |
-| 8. Markdown Rendering in Chat | 3/3 | Completed | 2026-03-30 |
-| 9. More Customisation role | 3/3 | Completed | 2026-03-30 |
-| 10. Role Refinement & Expansion | 3/3 | Completed | 2026-03-30 |
-| 11. Add Other Roles | 4/4 | Completed | 2026-04-01 |
-| 12. Onboarding Agent | 3/3 | Completed | 2026-04-01 |
-| 999.2. Separate Tab for Team Building | 2/2 | Completed | 2026-04-01 |
-
-## Backlog
-
-### Phase 999.3: Run as Docker Container (BACKLOG)
-**Goal:** Provide Docker support for easier deployment and containerized execution of the backend and frontend.
-
-### Phase 999.5: Ability to Add Files for Discussion (BACKLOG)
-**Goal:** Allow users to upload and attach files/documents to a session to provide extra context.
-
-### Phase 999.7: Add Hugging Face Inference Endpoint (BACKLOG)
-**Goal:** Integrate Hugging Face Inference Endpoints as a provider option.
-
-### Phase 999.8: Enable Auto Summarisation with a Model (BACKLOG)
-**Goal:** Allow users to specify a specific model to be used exclusively for automated session summarization.
-
-### Phase 999.9: .env Config Ingestion for Containers (BACKLOG)
-**Goal:** Implement support for ingesting LLM endpoint configurations and API keys via .env files.
+| 1-12. v1.0 Milestone | 38/38 | Completed | 2026-04-01 |
+| 13. Data Safety | 1/1 | Completed | 2026-04-02 |
+| 14. Layout & Contrast | 1/1 | Completed | 2026-04-02 |
+| 15. Workflow Protection | 1/1 | Completed | 2026-04-02 |
+| 16. Dockerization | 1/1 | Completed | 2026-04-02 |

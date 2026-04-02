@@ -42,11 +42,11 @@ export default function ModelSelector() {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h3 className="text-sm font-bold uppercase text-zinc-500 tracking-wider">Available Models</h3>
+        <h3 className="text-sm font-bold uppercase text-zinc-600 tracking-wider">Available Models</h3>
         <button
           onClick={fetchModels}
           disabled={loading}
-          className="flex items-center gap-2 text-xs font-semibold text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+          className="flex items-center gap-2 text-xs font-semibold text-zinc-600 dark:text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
         >
           <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
           Refresh
@@ -61,20 +61,20 @@ export default function ModelSelector() {
           >
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-500">
+                <div className="p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-600">
                   <Cpu className="w-5 h-5" />
                 </div>
                 <div>
                   <div className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 truncate max-w-[150px]" title={model.name}>
                     {model.name}
                   </div>
-                  <div className="text-[10px] font-bold uppercase text-zinc-400">
+                  <div className="text-[10px] font-bold uppercase text-zinc-600">
                     {model.providerName}
                   </div>
                 </div>
               </div>
               <div className="flex flex-col items-end gap-1">
-                <span className="text-[10px] font-mono text-zinc-500 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded">
+                <span className="text-[10px] font-mono text-zinc-600 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded">
                   {formatSize(model.size)}
                 </span>
                 {model.id.toLowerCase().includes('instruct') || model.id.toLowerCase().includes('chat') ? (
@@ -82,7 +82,7 @@ export default function ModelSelector() {
                     <CheckCircle2 className="w-3 h-3" /> Compatible
                   </div>
                 ) : (
-                  <div className="flex items-center gap-1 text-zinc-400 text-[10px] font-bold uppercase">
+                  <div className="flex items-center gap-1 text-zinc-600 text-[10px] font-bold uppercase">
                     <Info className="w-3 h-3" /> Base Model
                   </div>
                 )}
@@ -93,7 +93,7 @@ export default function ModelSelector() {
 
         {models.length === 0 && !loading && (
           <div className="col-span-full py-8 text-center bg-zinc-50 dark:bg-zinc-900/50 rounded-xl border border-dashed border-zinc-200 dark:border-zinc-800">
-            <p className="text-zinc-500 text-sm">No models found. Check your provider connections.</p>
+            <p className="text-zinc-600 text-sm">No models found. Check your provider connections.</p>
           </div>
         )}
       </div>

@@ -72,9 +72,17 @@ export class RefinementService {
 
     // 3. Generate streaming response
     try {
+      let fullText = '';
       for await (const chunk of adapter.generate(refiner.modelId, msgContext)) {
         if (chunk.text) {
+          fullText += chunk.text;
           yield { type: 'text', text: chunk.text };
+
+          // Extract refined prompt if tag is found
+          const match = fullText.match(/<refined_prompt>([\s\S]*?)<\/refined_prompt>/i);
+          if (match && match[1]) {
+            yield { type: 'refined_prompt', prompt: match[1].trim() };
+          }
         }
       }
     } catch (err) {
