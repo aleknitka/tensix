@@ -10,21 +10,22 @@ Users can evaluate and refine ideas through a structured, multi-perspective LLM 
 
 ## Requirements
 
-### Active (Milestone 2: Intelligent Orchestration & Tools)
+### Active
 
-- [ ] **RND-06**: Implement tool-use (function calling) for personas (e.g., web search, file access).
-- [ ] **RND-07**: Add "Dynamic Hat Selection" — the system can automatically suggest which hat should speak next.
-- [ ] **RND-08**: Support "Multi-Round Consensus" workflows where agents iterate until a conclusion is reached.
-- [ ] **RND-09**: Implement "Expert Knowledge Base" — allow users to upload documents for personas to reference.
-- [ ] **RND-10**: Support for "Branching Discussions" — allow the user to fork a session from any message.
+(None yet — plan next milestone to add requirements)
 
-### Validated (Milestone 1: Foundation & SEQ)
+### Validated
 
-- [x] **RND-01**: User can add/remove "Six Hats" and custom personas to a round-table session.
-- [x] **RND-02**: Support for local LLM backends (Ollama, LM Studio) via configurable endpoints.
-- [x] **RND-03**: Support for cloud-based LLM providers (OpenRouter/OpenAI API compatible).
-- [x] **RND-04**: Reusable API for external tools to trigger and consume round-table evaluations.
-- [x] **RND-05**: Web UI for real-time observation and interaction with the participants.
+- [x] **RND-06**: Implement tool-use (function calling) for personas (e.g., web search, file access). — v1.0
+- [x] **RND-07**: Add "Dynamic Hat Selection" — the system can automatically suggest which hat should speak next. — v1.0
+- [x] **RND-08**: Support "Multi-Round Consensus" workflows where agents iterate until a conclusion is reached. — v1.0
+- [x] **RND-09**: Implement "Expert Knowledge Base" — allow users to upload documents for personas to reference. — v1.0
+- [x] **RND-10**: Support for "Branching Discussions" — allow the user to fork a session from any message. — v1.0
+- [x] **RND-01**: User can add/remove "Six Hats" and custom personas to a round-table session. — v1.0
+- [x] **RND-02**: Support for local LLM backends (Ollama, LM Studio) via configurable endpoints. — v1.0
+- [x] **RND-03**: Support for cloud-based LLM providers (OpenRouter/OpenAI API compatible). — v1.0
+- [x] **RND-04**: Reusable API for external tools to trigger and consume round-table evaluations. — v1.0
+- [x] **RND-05**: Web UI for real-time observation and interaction with the participants. — v1.0
 
 ### Out of Scope
 
@@ -51,4 +52,4 @@ Users can evaluate and refine ideas through a structured, multi-perspective LLM 
 | Balanced Audit Goal | Focus on holistic evaluation rather than just ideation or risk. | — Pending |
 
 ---
-*Last updated: 2026-03-30 after initialization*
+*Last updated: 2026-04-02 after v1.0 milestone*
