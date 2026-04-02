@@ -48,12 +48,12 @@ export default function RoleSelector({ onSelect, excludeIds = DEFAULT_EXCLUDE }:
     fetchPersonas();
   }, [excludeIds]);
 
-  const filteredPersonas = personas.filter(p => 
+  const filteredPersonas = useMemo(() => personas.filter(p => 
     p.name.toLowerCase().includes(search.toLowerCase()) ||
     p.role.toLowerCase().includes(search.toLowerCase()) ||
     (p.description && p.description.toLowerCase().includes(search.toLowerCase())) ||
     (p.category && p.category.toLowerCase().includes(search.toLowerCase()))
-  );
+  ), [personas, search]);
 
   const groupedPersonas = useMemo(() => {
     const groups: Record<string, Persona[]> = {};
