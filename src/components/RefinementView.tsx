@@ -30,7 +30,6 @@ export default function RefinementView({
 }: RefinementViewProps) {
   const [input, setInput] = useState('');
   const [refinedPrompt, setRefinedPrompt] = useState('');
-  const [isEditingRefined, setIsEditingRefined] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [streamingText, setStreamingText] = useState('');
   const eventSourceRef = useRef<EventSource | null>(null);
@@ -53,6 +52,8 @@ export default function RefinementView({
       const data = JSON.parse(event.data);
       if (data.type === 'text') {
         setStreamingText(prev => prev + data.text);
+      } else if (data.type === 'refined_prompt') {
+        setRefinedPrompt(data.prompt);
       } else if (data.type === 'error') {
         console.error('Refinement error:', data.message);
         eventSource.close();
@@ -97,7 +98,7 @@ export default function RefinementView({
         <div className="flex items-center gap-2">
           <button
             onClick={onSkip}
-            className="flex items-center gap-2 px-3 py-1.5 text-xs font-bold text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+            className="flex items-center gap-2 px-3 py-1.5 text-xs font-bold text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
           >
             <SkipForward className="w-3.5 h-3.5" />
             Skip Refinement
@@ -164,27 +165,15 @@ export default function RefinementView({
         <div className="w-80 bg-zinc-50/50 dark:bg-zinc-900/30 flex flex-col p-6 space-y-6">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Refined Prompt</h4>
-              <button 
-                onClick={() => setIsEditingRefined(!isEditingRefined)}
-                className="p-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
-              >
-                <Edit3 className="w-3.5 h-3.5" />
-              </button>
+              <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600">Refined Prompt</h4>
+              <div className="p-1.5 text-zinc-600">
+                <MessageCircle className="w-3.5 h-3.5" />
+              </div>
             </div>
 
-            {isEditingRefined ? (
-              <textarea
-                value={refinedPrompt}
-                onChange={(e) => setRefinedPrompt(e.target.value)}
-                placeholder="The Refiner will summarize your final prompt here, or you can write it manually..."
-                className="w-full h-64 p-4 text-xs font-medium leading-relaxed bg-white dark:bg-zinc-950 border-2 border-indigo-500 dark:border-indigo-400 rounded-xl outline-none resize-none shadow-lg"
-              />
-            ) : (
-              <div className="w-full min-h-[16rem] p-4 text-xs font-medium leading-relaxed bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-y-auto text-zinc-600 dark:text-zinc-400 shadow-inner">
-                {refinedPrompt || <span className="text-zinc-400 italic">The Refiner will help you draft the perfect prompt here.</span>}
-              </div>
-            )}
+            <div className="w-full min-h-[16rem] p-4 text-xs font-medium leading-relaxed bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-y-auto text-zinc-600 dark:text-zinc-600 shadow-inner">
+              {refinedPrompt || <span className="text-zinc-600 italic">The Refiner will help you draft the perfect prompt here.</span>}
+            </div>
           </div>
 
           <div className="mt-auto space-y-3">
@@ -196,7 +185,7 @@ export default function RefinementView({
               <CheckCircle className="w-4 h-4" />
               Confirm & Start Audit
             </button>
-            <p className="text-[10px] text-center text-zinc-400 font-medium px-4">
+            <p className="text-[10px] text-center text-zinc-600 font-medium px-4">
               Confirming will finalize the problem statement and start the expert evaluation.
             </p>
           </div>

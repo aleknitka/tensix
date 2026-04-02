@@ -38,11 +38,11 @@ export default function ToolsTab() {
   return (
     <div className="space-y-4">
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 shadow-sm">
-        <h3 className="text-xs font-extrabold uppercase text-zinc-400 mb-3 flex items-center gap-2 tracking-wider">
+        <h3 className="text-xs font-extrabold uppercase text-zinc-600 mb-3 flex items-center gap-2 tracking-wider">
           <Wrench className="w-3.5 h-3.5" />
           Active Capabilities
         </h3>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+        <p className="text-sm text-zinc-600 dark:text-zinc-600 leading-relaxed font-medium">
           Personas assigned to this session can autonomously use the following tools when they need external information or capabilities.
         </p>
       </div>
@@ -52,7 +52,7 @@ export default function ToolsTab() {
           const Icon = tool.icon;
           return (
             <div key={tool.id} className="flex gap-4 p-4 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-sm transition-all hover:border-zinc-300 dark:hover:border-zinc-700">
-              <div className="w-10 h-10 rounded-lg bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center flex-shrink-0 text-zinc-500">
+              <div className="w-10 h-10 rounded-lg bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center flex-shrink-0 text-zinc-600">
                 <Icon className="w-5 h-5" />
               </div>
               <div className="flex-1 min-w-0">
@@ -64,12 +64,12 @@ export default function ToolsTab() {
                     </span>
                   )}
                   {tool.status === 'planned' && (
-                    <span className="px-1.5 py-0.5 rounded bg-zinc-100 text-zinc-500 dark:bg-zinc-800 text-[9px] font-bold uppercase tracking-wider">
+                    <span className="px-1.5 py-0.5 rounded bg-zinc-100 text-zinc-600 dark:bg-zinc-800 text-[9px] font-bold uppercase tracking-wider">
                       Coming Soon
                     </span>
                   )}
                 </div>
-                <div className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed font-medium">
+                <div className="text-xs text-zinc-600 dark:text-zinc-600 leading-relaxed font-medium">
                   {tool.description}
                 </div>
               </div>

@@ -59,7 +59,7 @@ function SidebarContent() {
       </div>
 
       <nav className="flex-1 overflow-y-auto p-2">
-        <div className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider px-3 mb-2">
+        <div className="text-[10px] font-bold text-zinc-600 dark:text-zinc-600 uppercase tracking-wider px-3 mb-2">
           Recent Sessions
         </div>
         <div className="space-y-1">
@@ -77,7 +77,7 @@ function SidebarContent() {
                 <MessageSquare className={`w-4 h-4 ${
                   pathname === '/sessions' && currentId === session.id
                     ? 'text-zinc-900 dark:text-zinc-100'
-                    : 'text-zinc-500 dark:text-zinc-400'
+                    : 'text-zinc-600 dark:text-zinc-600'
                 }`} />
                 <span className={`text-sm font-bold truncate ${
                   pathname === '/sessions' && currentId === session.id
@@ -88,8 +88,8 @@ function SidebarContent() {
                 </span>
               </div>
               <div className="flex items-center gap-1 ml-7">
-                <Clock className="w-3 h-3 text-zinc-400 dark:text-zinc-500" />
-                <span className="text-[10px] text-zinc-400 dark:text-zinc-500 uppercase font-bold tracking-tight">
+                <Clock className="w-3 h-3 text-zinc-600 dark:text-zinc-600" />
+                <span className="text-[10px] text-zinc-600 dark:text-zinc-600 uppercase font-bold tracking-tight">
                   {new Date(session.updatedAt).toLocaleDateString()}
                 </span>
               </div>
@@ -104,7 +104,7 @@ function SidebarContent() {
           className={`flex items-center gap-2 text-sm font-medium p-2 rounded-lg transition-colors ${
             pathname === '/settings'
               ? 'bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100'
-              : 'text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800'
+              : 'text-zinc-600 dark:text-zinc-600 hover:bg-zinc-200 dark:hover:bg-zinc-800'
           }`}
         >
           <Settings className="w-4 h-4" />

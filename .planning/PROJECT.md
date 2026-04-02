@@ -12,7 +12,12 @@ Users can evaluate and refine ideas through a structured, multi-perspective LLM 
 
 ### Active
 
-(None yet — plan next milestone to add requirements)
+- [ ] **UI-01**: Restrict system reset to only clear chat history (sessions/messages) while preserving providers and personas.
+- [ ] **UI-02**: Increase chat window width to at least `max-w-7xl` for better visibility on large screens.
+- [ ] **UI-03**: Disable user editing of the Refiner's prompt in the Refinement phase.
+- [ ] **UI-04**: Improve text contrast across the application, specifically targeting grey-on-white text.
+- [ ] **OPS-01**: Develop a Docker deployment strategy (Dockerfile + Docker Compose).
+- [ ] **OPS-02**: Support .env configuration ingestion for containerized deployments.
 
 ### Validated
 
@@ -52,4 +57,4 @@ Users can evaluate and refine ideas through a structured, multi-perspective LLM 
 | Balanced Audit Goal | Focus on holistic evaluation rather than just ideation or risk. | — Pending |
 
 ---
-*Last updated: 2026-04-02 after v1.0 milestone*
+*Last updated: 2026-04-02 for UI Refinements & Docker milestone*

@@ -299,7 +299,7 @@ export default function PersonaEditor({ isLibrary = false }: PersonaEditorProps)
           <h3 className="font-bold text-lg">{editingId ? 'Edit Role' : 'New Role'}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase text-zinc-500">Name</label>
+              <label className="text-xs font-bold uppercase text-zinc-600">Name</label>
               <input
                 type="text"
                 value={editForm.name || ''}
@@ -309,7 +309,7 @@ export default function PersonaEditor({ isLibrary = false }: PersonaEditorProps)
               />
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase text-zinc-500">Role/Title</label>
+              <label className="text-xs font-bold uppercase text-zinc-600">Role/Title</label>
               <input
                 type="text"
                 value={editForm.role || ''}
@@ -321,7 +321,7 @@ export default function PersonaEditor({ isLibrary = false }: PersonaEditorProps)
           </div>
 
           <div className="space-y-2">
-            <label className="text-xs font-bold uppercase text-zinc-500">Description</label>
+            <label className="text-xs font-bold uppercase text-zinc-600">Description</label>
             <input
               type="text"
               value={editForm.description || ''}
@@ -334,8 +334,8 @@ export default function PersonaEditor({ isLibrary = false }: PersonaEditorProps)
           <div className="space-y-4">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-bold uppercase text-zinc-500">System Prompt</label>
-                <div className="flex items-center gap-2 text-[10px] font-bold text-zinc-400 uppercase">
+                <label className="text-xs font-bold uppercase text-zinc-600">System Prompt</label>
+                <div className="flex items-center gap-2 text-[10px] font-bold text-zinc-600 uppercase">
                   <BookOpen className="w-3 h-3" />
                   Insert Template
                 </div>
@@ -363,7 +363,7 @@ export default function PersonaEditor({ isLibrary = false }: PersonaEditorProps)
               </div>
               
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-400">Persona Icon</label>
+                <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-600">Persona Icon</label>
                 <IconPicker 
                   selectedId={editForm.icon_id || 'user-circle'} 
                   onChange={id => setEditForm(prev => ({ ...prev, icon_id: id }))} 
@@ -371,7 +371,7 @@ export default function PersonaEditor({ isLibrary = false }: PersonaEditorProps)
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-400">Color Accent</label>
+                <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-600">Color Accent</label>
                 <ColorPicker 
                   selectedId={editForm.color_accent || 'slate'} 
                   onChange={id => setEditForm(prev => ({ ...prev, color_accent: id }))} 
@@ -379,9 +379,9 @@ export default function PersonaEditor({ isLibrary = false }: PersonaEditorProps)
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-400">Skills (comma separated)</label>
+                <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-600">Skills (comma separated)</label>
                 <div className="flex items-center gap-2 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2">
-                  <Tag className="w-3.5 h-3.5 text-zinc-400" />
+                  <Tag className="w-3.5 h-3.5 text-zinc-600" />
                   <input
                     type="text"
                     value={editForm.skills?.join(', ') || ''}
@@ -402,7 +402,7 @@ export default function PersonaEditor({ isLibrary = false }: PersonaEditorProps)
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-400 flex justify-between">
+                  <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-600 flex justify-between">
                     Temperature <span>{editForm.temperature ?? 'Default'}</span>
                   </label>
                   <input
@@ -417,7 +417,7 @@ export default function PersonaEditor({ isLibrary = false }: PersonaEditorProps)
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-400 flex justify-between">
+                  <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-600 flex justify-between">
                     Top P <span>{editForm.top_p ?? 'Default'}</span>
                   </label>
                   <input
@@ -432,7 +432,7 @@ export default function PersonaEditor({ isLibrary = false }: PersonaEditorProps)
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-400">Max Tokens</label>
+                  <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-600">Max Tokens</label>
                   <input
                     type="number"
                     placeholder="Provider Default"
@@ -443,7 +443,7 @@ export default function PersonaEditor({ isLibrary = false }: PersonaEditorProps)
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-400 flex justify-between">
+                  <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-600 flex justify-between">
                     Chattiness <span>{editForm.chattiness_limit ?? '2'}</span>
                   </label>
                   <input
@@ -459,7 +459,7 @@ export default function PersonaEditor({ isLibrary = false }: PersonaEditorProps)
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-400 flex justify-between">
+                <label className="text-[10px] font-black uppercase tracking-tighter text-zinc-600 flex justify-between">
                   Presence Penalty <span>{editForm.presence_penalty ?? '0'}</span>
                 </label>
                 <input
@@ -522,7 +522,7 @@ export default function PersonaEditor({ isLibrary = false }: PersonaEditorProps)
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase text-zinc-500">Assigned Model</label>
+              <label className="text-xs font-bold uppercase text-zinc-600">Assigned Model</label>
               <select
                 value={`${editForm.providerId}:${editForm.modelId}`}
                 onChange={e => {
@@ -540,7 +540,7 @@ export default function PersonaEditor({ isLibrary = false }: PersonaEditorProps)
               </select>
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase text-zinc-500">Role Category</label>
+              <label className="text-xs font-bold uppercase text-zinc-600">Role Category</label>
               <select
                 value={editForm.role_type || 'auditor'}
                 onChange={e => setEditForm(prev => ({ ...prev, role_type: e.target.value }))}
@@ -557,7 +557,7 @@ export default function PersonaEditor({ isLibrary = false }: PersonaEditorProps)
           <div className="flex justify-end gap-3 pt-4">
             <button
               onClick={cancelEdit}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
             >
               <X className="w-4 h-4" />
               Cancel
@@ -581,26 +581,26 @@ export default function PersonaEditor({ isLibrary = false }: PersonaEditorProps)
           >
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
-                <div className={`p-2 rounded-xl bg-zinc-100 dark:bg-zinc-800 ${p.color_accent ? getTextColorClass(p.color_accent) : 'text-zinc-500'}`}>
+                <div className={`p-2 rounded-xl bg-zinc-100 dark:bg-zinc-800 ${p.color_accent ? getTextColorClass(p.color_accent) : 'text-zinc-600'}`}>
                   {getRoleIcon(p.role_type, p.icon_id)}
                 </div>
                 <div>
                   <div className="font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
                     {p.name}
                     {p.role_type && (
-                      <span className="text-[9px] font-bold uppercase bg-zinc-100 dark:bg-zinc-800 px-1 py-0.5 rounded text-zinc-400">
+                      <span className="text-[9px] font-bold uppercase bg-zinc-100 dark:bg-zinc-800 px-1 py-0.5 rounded text-zinc-600">
                         {p.role_type}
                       </span>
                     )}
                   </div>
-                  <div className="text-[10px] font-bold uppercase text-zinc-400 tracking-wider">{p.role}</div>
+                  <div className="text-[10px] font-bold uppercase text-zinc-600 tracking-wider">{p.role}</div>
                 </div>
               </div>
               <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                 <button
                   onClick={() => handleExport(p)}
                   title="Export to YAML"
-                  className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg text-zinc-500 transition-colors"
+                  className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg text-zinc-600 transition-colors"
                 >
                   <Download className="w-4 h-4" />
                 </button>
@@ -608,35 +608,35 @@ export default function PersonaEditor({ isLibrary = false }: PersonaEditorProps)
                   <button
                     onClick={() => handleClone(p)}
                     title="Clone to Custom"
-                    className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg text-zinc-500 transition-colors"
+                    className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg text-zinc-600 transition-colors"
                   >
                     <Copy className="w-4 h-4" />
                   </button>
                 )}
                 <button
                   onClick={() => startEdit(p)}
-                  className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg text-zinc-500 transition-colors"
+                  className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg text-zinc-600 transition-colors"
                 >
                   <Edit2 className="w-4 h-4" />
                 </button>
                 {!p.is_predefined && (
                   <button
                     onClick={() => handleDelete(p.id)}
-                    className="p-2 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-lg text-zinc-500 hover:text-rose-500 transition-colors"
+                    className="p-2 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-lg text-zinc-600 hover:text-rose-500 transition-colors"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 )}
               </div>
             </div>
-            <div className="mt-3 text-xs text-zinc-500 line-clamp-2 italic">
+            <div className="mt-3 text-xs text-zinc-600 line-clamp-2 italic">
               {p.description || `"${p.systemPrompt}"`}
             </div>
             
             {p.skills && p.skills.length > 0 && (
               <div className="mt-3 flex flex-wrap gap-1">
                 {p.skills.map(s => (
-                  <span key={s} className="text-[9px] px-1.5 py-0.5 rounded-md bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-500 font-medium">
+                  <span key={s} className="text-[9px] px-1.5 py-0.5 rounded-md bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-600 font-medium">
                     {s}
                   </span>
                 ))}
@@ -645,14 +645,14 @@ export default function PersonaEditor({ isLibrary = false }: PersonaEditorProps)
 
             <div className="mt-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold text-zinc-400 uppercase">Assigned Model:</span>
-                <span className="text-[10px] font-mono bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded text-zinc-500">
+                <span className="text-[10px] font-bold text-zinc-600 uppercase">Assigned Model:</span>
+                <span className="text-[10px] font-mono bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded text-zinc-600">
                   {p.modelId || 'None'}
                 </span>
               </div>
               {p.chattiness_limit && (
                 <div className="flex items-center gap-1">
-                  <span className="text-[10px] font-bold text-zinc-400 uppercase">Chattiness:</span>
+                  <span className="text-[10px] font-bold text-zinc-600 uppercase">Chattiness:</span>
                   <div className="flex gap-0.5">
                     {[...Array(5)].map((_, i) => (
                       <div 

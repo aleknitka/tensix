@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 import ProviderConfigForm from '@/components/ProviderConfigForm';
 import ModelSelector from '@/components/ModelSelector';
 import PersonaEditor from '@/components/PersonaEditor';
-import { Settings as SettingsIcon, Cpu, Globe, Users, Trash2, AlertTriangle, Library, Upload, CheckCircle2 } from 'lucide-react';
+import { Settings as SettingsIcon, Cpu, Globe, Users, Trash2, AlertTriangle, Library, Upload, CheckCircle2, MessageSquare } from 'lucide-react';
 import yaml from 'js-yaml';
 import { roleSchema } from '@/server/services/role-schema';
 
@@ -19,6 +19,16 @@ export default function SettingsPage() {
       window.location.reload();
     } catch (err) {
       console.error('Reset failed', err);
+    }
+  };
+
+  const handleClearChats = async () => {
+    if (!confirm('Are you sure you want to delete ALL chat history (sessions and messages)? This will preserve your models and personas.')) return;
+    try {
+      await fetch('http://localhost:3001/system/clear-chats', { method: 'POST' });
+      window.location.reload();
+    } catch (err) {
+      console.error('Clear chats failed', err);
     }
   };
 
@@ -138,21 +148,41 @@ export default function SettingsPage() {
         </section>
 
         <section className="pt-8 border-t border-zinc-200 dark:border-zinc-800">
-          <div className="bg-rose-50 dark:bg-rose-900/10 border border-rose-200 dark:border-rose-900/30 rounded-2xl p-8">
-            <div className="flex items-center gap-3 text-rose-600 dark:text-rose-400 mb-4">
+          <div className="bg-rose-50 dark:bg-rose-900/10 border border-rose-200 dark:border-rose-900/30 rounded-2xl p-8 space-y-6">
+            <div className="flex items-center gap-3 text-rose-600 dark:text-rose-400">
               <AlertTriangle className="w-6 h-6" />
               <h2 className="text-xl font-bold uppercase tracking-tight">Danger Zone</h2>
             </div>
-            <p className="text-sm text-rose-600/80 dark:text-rose-400/80 mb-6 font-medium">
-              Resetting the system will permanently delete all your data, including providers, custom personas, and session history.
-            </p>
-            <button
-              onClick={handleReset}
-              className="flex items-center gap-2 bg-rose-600 hover:bg-rose-700 text-white px-6 py-3 rounded-xl font-bold text-sm transition-all shadow-lg shadow-rose-600/20 active:scale-95"
-            >
-              <Trash2 className="w-4 h-4" />
-              Reset System & Clear All Data
-            </button>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="p-6 bg-white dark:bg-black/20 border border-rose-100 dark:border-rose-900/30 rounded-xl space-y-4">
+                <h3 className="font-bold text-rose-700 dark:text-rose-300">Clear Chat History</h3>
+                <p className="text-sm text-rose-600/70 dark:text-rose-400/70">
+                  Permanently delete all sessions and messages. Your providers and custom personas will be preserved.
+                </p>
+                <button
+                  onClick={handleClearChats}
+                  className="flex items-center gap-2 bg-rose-600/10 hover:bg-rose-600 text-rose-600 hover:text-white border border-rose-600/20 px-4 py-2 rounded-lg font-bold text-xs transition-all active:scale-95"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  Clear All Chats
+                </button>
+              </div>
+
+              <div className="p-6 bg-white dark:bg-black/20 border border-rose-100 dark:border-rose-900/30 rounded-xl space-y-4">
+                <h3 className="font-bold text-rose-700 dark:text-rose-300">System Reset</h3>
+                <p className="text-sm text-rose-600/70 dark:text-rose-400/70">
+                  CRITICAL: Delete EVERYTHING. This will remove all providers, personas, and sessions.
+                </p>
+                <button
+                  onClick={handleReset}
+                  className="flex items-center gap-2 bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-lg font-bold text-xs transition-all shadow-lg shadow-rose-600/20 active:scale-95"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  Full System Reset
+                </button>
+              </div>
+            </div>
           </div>
         </section>
       </div>

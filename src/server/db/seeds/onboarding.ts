@@ -14,7 +14,9 @@ Follow these principles:
 4. IDENTIFY CONSTRAINTS: Ask about budget, timeline, technical limitations, or specific stakeholders.
 5. PUSH FOR THE 'WHY': Understand the underlying motivation to ensure the evaluation addresses the core problem.
 
-When you feel the prompt is sufficiently refined, summarize the final version and ask the user for confirmation.`,
+When you feel the prompt is sufficiently refined, summarize the final version and ask the user for confirmation.
+
+CRITICAL: When you summarize the final refined version, you MUST wrap the exact final prompt text within <refined_prompt>...</refined_prompt> tags so the system can extract it for the evaluation phase.`,
   icon_id: 'bot',
   color_accent: 'indigo',
   category: 'onboarding',

@@ -66,16 +66,16 @@ export default function DebateView({ messages, streamingMessage, onSendMessage, 
   }, [messages, streamingMessage]);
 
   return (
-    <div className="flex flex-col h-full max-w-5xl mx-auto bg-white dark:bg-zinc-950 overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-xl">
+    <div className="flex flex-col h-full max-w-7xl mx-auto bg-white dark:bg-zinc-950 overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-xl">
       <div ref={scrollRef} className="flex-1 overflow-y-auto p-6 space-y-8 scroll-smooth">
         {messages.length === 0 && !streamingMessage && (
           <div className="h-full flex flex-col items-center justify-center text-center space-y-4 py-20">
-            <div className="w-16 h-16 rounded-3xl bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center text-zinc-400">
+            <div className="w-16 h-16 rounded-3xl bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center text-zinc-600">
               <Bot className="w-8 h-8" />
             </div>
             <div className="space-y-2">
               <h3 className="text-xl font-bold">The Round Table is Ready</h3>
-              <p className="text-zinc-500 max-w-sm text-sm">
+              <p className="text-zinc-600 max-w-sm text-sm">
                 Share your idea, proposal, or problem to start the multi-perspective evaluation.
               </p>
             </div>
@@ -135,10 +135,10 @@ export default function DebateView({ messages, streamingMessage, onSendMessage, 
                 <div className="flex items-center gap-2 px-1">
                   {m.role === 'user' ? (
                     <>
-                      <span className="text-[10px] text-zinc-500 font-medium">
+                      <span className="text-[10px] text-zinc-600 font-medium">
                         {new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </span>
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Proponent</span>
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-600">Proponent</span>
                     </>
                   ) : (
                     <>
@@ -150,7 +150,7 @@ export default function DebateView({ messages, streamingMessage, onSendMessage, 
                           Final Audit
                         </span>
                       )}
-                      <span className="text-[10px] text-zinc-500 font-medium">
+                      <span className="text-[10px] text-zinc-600 font-medium">
                         {new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </span>
                     </>
@@ -168,7 +168,7 @@ export default function DebateView({ messages, streamingMessage, onSendMessage, 
                         autoFocus
                       />
                       <div className="flex justify-end gap-2">
-                        <button onClick={handleCancelEdit} className="p-1 text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100"><X className="w-4 h-4" /></button>
+                        <button onClick={handleCancelEdit} className="p-1 text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-100"><X className="w-4 h-4" /></button>
                         <button onClick={handleSaveEdit} className="p-1 text-emerald-500 hover:text-emerald-600"><Save className="w-4 h-4" /></button>
                       </div>
                     </div>
@@ -189,7 +189,7 @@ export default function DebateView({ messages, streamingMessage, onSendMessage, 
                         }`}>
                           <button 
                             onClick={() => handleStartEdit(m)}
-                            className="p-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 shadow-sm"
+                            className="p-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-100 shadow-sm"
                           >
                             <Edit2 className="w-3.5 h-3.5" />
                           </button>
@@ -197,14 +197,14 @@ export default function DebateView({ messages, streamingMessage, onSendMessage, 
                             <button 
                               onClick={() => onForkMessage(m.id)}
                               title="Fork session from here"
-                              className="p-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-400 hover:text-blue-500 shadow-sm"
+                              className="p-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-600 hover:text-blue-500 shadow-sm"
                             >
                               <GitFork className="w-3.5 h-3.5" />
                             </button>
                           )}
                           <button 
                             onClick={() => onDeleteMessage(m.id)}
-                            className="p-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-400 hover:text-rose-500 shadow-sm"
+                            className="p-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-600 hover:text-rose-500 shadow-sm"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -226,7 +226,7 @@ export default function DebateView({ messages, streamingMessage, onSendMessage, 
         {streamingMessage && (
           <div className="flex gap-4 justify-start animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="w-10 h-10 rounded-xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center flex-shrink-0 border border-zinc-200 dark:border-zinc-700 shadow-sm">
-              <Bot className="w-6 h-6 text-zinc-500 animate-pulse" />
+              <Bot className="w-6 h-6 text-zinc-600 animate-pulse" />
             </div>
             <div className="max-w-[85%] space-y-1">
               <div className="flex items-center gap-2 px-1">
