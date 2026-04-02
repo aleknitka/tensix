@@ -8,7 +8,10 @@ import RefinementIndicator from '@/components/RefinementIndicator';
 import RoundTableConfig from '@/components/RoundTableConfig';
 import DocumentManager from '@/components/DocumentManager';
 import BranchNavigator from '@/components/BranchNavigator';
-import { MessageSquare, LayoutDashboard, ChevronLeft, Download, FileText, Loader2, Bot } from 'lucide-react';
+import SidebarTabs, { SidebarTabId } from '@/components/SidebarTabs';
+import SessionSettings from '@/components/SessionSettings';
+import ToolsTab from '@/components/ToolsTab';
+import { MessageSquare, LayoutDashboard, ChevronLeft, Loader2, Bot } from 'lucide-react';
 import Link from 'next/link';
 
 interface OrchestrationStep {
@@ -28,6 +31,11 @@ function SessionContent() {
   const [isEvaluating, setIsEvaluating] = useState(false);
   const [isGeneratingReport, setIsGeneratingReport] = useState(false);
   const eventSourceRef = useRef<EventSource | null>(null);
+
+  // Lifted state
+  const [activeTab, setActiveTab] = useState<SidebarTabId>('team');
+  const [mode, setMode] = useState<'sequential' | 'auto' | 'hitl'>('sequential');
+  const [maxTurns, setMaxTurns] = useState(10);
 
   const fetchSession = async () => {
     if (!id) return;
@@ -143,12 +151,16 @@ function SessionContent() {
     }
   };
 
-  const handleStartEvaluation = (personaIds: string[], mode: string = 'sequential', maxTurns: number = 10) => {
+  const handleStartEvaluation = (personaIds: string[], overrideMode?: string, overrideMaxTurns?: number) => {
     if (!id) return;
     setIsEvaluating(true);
     setStreamingMessage(null);
+    setActiveTab('team');
+    
+    const m = overrideMode || mode;
+    const t = overrideMaxTurns || maxTurns;
 
-    const eventSource = new EventSource(`http://localhost:3001/sessions/${id}/evaluate?personaIds=${personaIds.join(',')}&mode=${mode}&maxTurns=${maxTurns}`);
+    const eventSource = new EventSource(`http://localhost:3001/sessions/${id}/evaluate?personaIds=${personaIds.join(',')}&mode=${m}&maxTurns=${t}`);
     eventSourceRef.current = eventSource;
 
     eventSource.onmessage = (event) => {
@@ -276,35 +288,6 @@ function SessionContent() {
             </div>
           </div>
         </div>
-
-        <div className="flex items-center gap-3">
-          <button
-            onClick={handleExportJson}
-            className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors border border-transparent hover:border-zinc-200 dark:hover:border-zinc-800 rounded-lg"
-          >
-            <Download className="w-3.5 h-3.5" />
-            Export JSON
-          </button>
-          <button
-            onClick={handleExportMarkdown}
-            className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors border border-transparent hover:border-zinc-200 dark:hover:border-zinc-800 rounded-lg"
-          >
-            <FileText className="w-3.5 h-3.5" />
-            Export Markdown
-          </button>
-          <button
-            onClick={handleGenerateReport}
-            disabled={isGeneratingReport || messages.length === 0}
-            className="flex items-center gap-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 px-4 py-2 rounded-lg text-xs font-bold transition-all disabled:opacity-50 shadow-sm"
-          >
-            {isGeneratingReport ? (
-              <Loader2 className="w-3.5 h-3.5 animate-spin" />
-            ) : (
-              <FileText className="w-3.5 h-3.5" />
-            )}
-            Generate Audit Report
-          </button>
-        </div>
       </header>
 
       <div className="flex-1 flex overflow-hidden p-6 gap-6">
@@ -361,23 +344,53 @@ function SessionContent() {
         </div>
         
         <div className="flex-2 w-[400px] flex flex-col gap-6 overflow-y-auto pr-2">
-          <BranchNavigator currentSessionId={id} />
-          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 shadow-sm">
-            <h3 className="text-xs font-extrabold uppercase text-zinc-400 mb-3 flex items-center gap-2 tracking-wider">
-              <LayoutDashboard className="w-3.5 h-3.5" />
-              Session Insights
-            </h3>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
-              Select the participants from the Six Thinking Hats below. Each expert will evaluate the latest idea sequentially to maintain your GPU VRAM limits.
-            </p>
-          </div>
-          <DocumentManager sessionId={id} />
-          <RoundTableConfig 
-            sessionId={id} 
-            onStartEvaluation={handleStartEvaluation}
-            onStopEvaluation={handleStopEvaluation}
-            isEvaluating={isEvaluating}
-          />
+          <SidebarTabs activeTab={activeTab} onTabChange={setActiveTab} />
+          
+          {activeTab === 'team' && (
+            <>
+              <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 shadow-sm">
+                <h3 className="text-xs font-extrabold uppercase text-zinc-400 mb-3 flex items-center gap-2 tracking-wider">
+                  <LayoutDashboard className="w-3.5 h-3.5" />
+                  Session Insights
+                </h3>
+                <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">
+                  Select the participants from the Six Thinking Hats below. Each expert will evaluate the latest idea sequentially to maintain your GPU VRAM limits.
+                </p>
+              </div>
+              <RoundTableConfig 
+                sessionId={id} 
+                onStartEvaluation={handleStartEvaluation}
+                onStopEvaluation={handleStopEvaluation}
+                isEvaluating={isEvaluating}
+              />
+            </>
+          )}
+
+          {activeTab === 'docs' && (
+            <DocumentManager sessionId={id} />
+          )}
+
+          {activeTab === 'branches' && (
+            <BranchNavigator currentSessionId={id} />
+          )}
+
+          {activeTab === 'settings' && (
+            <SessionSettings
+              mode={mode}
+              onModeChange={setMode}
+              maxTurns={maxTurns}
+              onMaxTurnsChange={setMaxTurns}
+              onExportJson={handleExportJson}
+              onExportMarkdown={handleExportMarkdown}
+              onGenerateReport={handleGenerateReport}
+              isGeneratingReport={isGeneratingReport}
+              hasMessages={messages.length > 0}
+            />
+          )}
+
+          {activeTab === 'tools' && (
+            <ToolsTab />
+          )}
         </div>
       </div>
     </div>
