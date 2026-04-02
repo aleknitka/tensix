@@ -15,12 +15,24 @@ import { seedThinkingHats } from './db/seeds/personas'
 import { syncRoles } from './services/role-sync'
 import { RefinementService } from './services/refinement-service'
 
-const app = new Hono()
+export const app = new Hono()
 
 // Run role sync on startup
 syncRoles().catch(err => console.error('Initial role sync failed:', err))
 
-app.use('/*', cors())
+const allowedOrigins = [
+  'http://localhost:3000',
+  ...process.env.ALLOWED_ORIGINS?.split(',').map(o => o.trim()).filter(Boolean) || []
+]
+
+app.use('/*', cors({
+  origin: (origin) => {
+    if (allowedOrigins.includes(origin)) {
+      return origin
+    }
+    return null
+  }
+}))
 
 app.get('/status', (c) => {
   return c.json({
